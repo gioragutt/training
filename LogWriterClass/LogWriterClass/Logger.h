@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LOGGER_H_
+#define LOGGER_H_
 
 #include <iostream>
 #include <fstream>
@@ -28,3 +29,5 @@ protected:
 	std::string _token;
 	DebugLevel _debugLevel;
 };
+
+#endif /* LOGGER_H_ */

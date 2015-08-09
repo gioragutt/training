@@ -1,4 +1,5 @@
-#pragma once
+#ifndef FILE_NOT_FOUND_H_
+#define FILE_NOT_FOUND_H_
 
 #include <exception>
 #include <string>
@@ -13,3 +14,4 @@ private:
 	std::string _filePath;
 };
 
+#endif /* FILE_NOT_FOUND_H_ */
