@@ -16,14 +16,23 @@ public:
 	Logger(const char* _fileName, ConStrRef _loggerName,
 		   ConStrRef _token, DebugLevel _debugLevel);
 	~Logger();
-	void write(DebugLevel level, const std::string & message);
-	void setDebugLevel(DebugLevel level);
 
-protected:
+public: // Setters
+	void setDebugLevel(DebugLevel _newLevel);
+	void setToken(ConStrRef _newToken);
+	void setName(ConStrRef _newLoggerName);
+
+public: // Writer methods
+	void write(DebugLevel level, ConStrRef message);
+	void writeDebug(ConStrRef debugMessage);
+	void writeWarning(ConStrRef warningMessage);
+	void writeInfo(ConStrRef infoMessage);
+
+protected: // Helping methods
 	std::string getTimeStamp();
 	std::string getDebugLevelName(DebugLevel lvl);
 
-protected:
+protected: // Data members
 	std::ofstream _file;
 	std::string _loggerName;
 	std::string _token;

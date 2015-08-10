@@ -5,6 +5,8 @@
 using std::string;
 using std::stringstream;
 
+#pragma region C'tor D'tor VCATOI
+
 // Initializes an instance of the logger class
 // Parameters:
 //	* _fileNamelog :	file for output
@@ -26,25 +28,6 @@ Logger::Logger(const char* _fileName, ConStrRef _loggerName, ConStrRef _token, D
 		throw file_not_found(_fileName);
 }
 
-// Writes message to log
-// Parameters
-//	* level	  :		debug level (will print if debug level is high enough
-//	* message :		message to write to log
-void Logger::write(DebugLevel level, const string & message)
-{
-	// Check debug level is high enough
-	if (level <= _debugLevel)
-	{
-		_file << getDebugLevelName(level) << " [ " << getTimeStamp() << " ] [ " << _loggerName
-	   		  << " ] [ " << _token << " ] : " << message << std::endl;
-	}
-}
-
-void Logger::setDebugLevel(DebugLevel level)
-{
-	_debugLevel = level;
-}
-
 // D'tor for logger
 // closes file if still open
 Logger::~Logger()
@@ -53,6 +36,66 @@ Logger::~Logger()
 		_file.close();
 }
 
+#pragma endregion
+
+#pragma region Setters
+
+// sets the debug level of the logger
+void Logger::setDebugLevel(DebugLevel _newLevel)
+{
+	_debugLevel = _newLevel;
+}
+
+// sets the token
+void Logger::setToken(ConStrRef _newToken)
+{
+	_token = _newToken;
+}
+
+// sets the name
+void Logger::setName(ConStrRef _newLoggerName)
+{
+	_loggerName = _newLoggerName;
+}
+
+#pragma endregion
+
+#pragma region Write Methods
+
+// Writes message to log
+// Parameters
+//	* level	  :		debug level (will print if debug level is high enough
+//	* message :		message to write to log
+void Logger::write(DebugLevel level, ConStrRef message)
+{
+	// Check debug level is high enough
+	if (level <= _debugLevel)
+	{
+		_file << getDebugLevelName(level) << " [ " << getTimeStamp() << " ] ";
+		if (_loggerName != "") { _file << "[ " << _loggerName << " ] "; }
+		if (_token != "") { _file << "[ " << _token << " ] "; }
+		_file << ": " << message << std::endl;
+	}
+}
+
+void Logger::writeDebug(ConStrRef debugMessage)
+{
+	write(DebugLevel::DEBUG, debugMessage);
+}
+
+void Logger::writeWarning(ConStrRef warningMessage)
+{
+	write(DebugLevel::WARNING, warningMessage);
+}
+
+void Logger::writeInfo(ConStrRef infoMessage)
+{
+	write(DebugLevel::INFO, infoMessage);
+}
+
+#pragma endregion
+
+// gets the current time in format: DD/MM/YY HH:mm:SS
 string Logger::getTimeStamp()
 {
 	// variables for getting local time
@@ -88,9 +131,9 @@ string Logger::getDebugLevelName(DebugLevel lvl)
 		case DebugLevel::WARNING:
 			return "WARNING";
 		case DebugLevel::INFO:
-			return "INFO\t";
+			return "INFO";
 		case DebugLevel::DEBUG:
-			return "DEBUG\t";
+			return "DEBUG";
 		default:
 			return "WRONG-DEBUG-LEVEL";
 	}
