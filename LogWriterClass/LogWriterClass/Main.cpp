@@ -4,35 +4,51 @@
 #include <vector>
 
 using std::vector;
+using std::cout;
+using std::endl;
 
 int main()
 {
-	Logger logAllData("c:/logfile.txt", "logger name", "token", DebugLevel::DEBUG);
-	Logger logNoToken("c:/logfile.txt", "logger name", "", DebugLevel::DEBUG);
-	Logger logNoName("c:/logfile.txt", "", "token", DebugLevel::DEBUG);
-	Logger logOnlyPath("c:/logfile.txt", "", "", DebugLevel::DEBUG);
+	Logger* log = nullptr;
 
-	vector<Logger*> loggers;
-	loggers.push_back(&logAllData);
-	loggers.push_back(&logNoName);
-	loggers.push_back(&logNoToken);
-	loggers.push_back(&logOnlyPath);
-
-	for (auto i = loggers.begin(), end = loggers.end(); i != end; ++i)
+	try
 	{
-		(*i)->write(DebugLevel::DEBUG, "Hello ke pasa amigo bag kok bag");
+		log = new Logger("c:/logfile.txt", "ZOHER-LOGGER #1", "Token #1", DebugLevel::INFO);
+	}
+	catch (file_not_found& exp)
+	{
+		cout << exp.what() << endl;
 	}
 
-	//for (int i = 0; i < 40; i++)
-	//DebugLevel lvl = DebugLevel::INFO;
-	//{
-	//	log.write(lvl, "#" + std::to_string(INT_MAX - 150000 * i));
-	//	for (int j = 0; j < INT_MAX / 10; j++)
-	//	{ }
-	//	lvl = (DebugLevel)((lvl + 1) % 3);
-	//	if (i % 5 == 0)
-	//		log.setDebugLevel(lvl);
-	//}
+	if (log == nullptr)
+		return 0;
+
+	cout << "Log level is INFO, should print once to cout and three times to file" << endl;
+	cout << "--------------------------------------------------------------------" << endl;
+	log->writeInfo("Log level is info, and this is info print");
+	log->writeWarning("Log level is info, and this is warning print");
+	log->writeDebug("Log level is info, and this is debug print");
+	cout << "--------------------------------------------------------------------" << endl << endl;
+
+	cout << "Log level is WARNING, should print twice to cout and three times to file" << endl;
+	cout << "--------------------------------------------------------------------" << endl;
+
+	log->setDebugLevel(DebugLevel::WARNING); log->setName("ZOHER-LOGGER #2"); log->setToken("Token #2");
+
+	log->writeInfo("Log level is warning, and this is info print");
+	log->writeWarning("Log level is warning, and this is warning print");
+	log->writeDebug("Log level is warning, and this is debug print");
+	cout << "--------------------------------------------------------------------" << endl << endl;
+
+	cout << "Log level is DEBUG, should print three times to cout and three times to file" << endl;
+	cout << "--------------------------------------------------------------------" << endl;
+
+	log->setDebugLevel(DebugLevel::DEBUG); log->setName("ZOHER-LOGGER #3"); log->setToken("Token #3");
+	
+	log->writeInfo("Log level is debug, and this is info print");
+	log->writeWarning("Log level is debug, and this is warning print");
+	log->writeDebug("Log level is debug, and this is debug print");
+	cout << "--------------------------------------------------------------------" << endl;
 
 	return 0;
 }
