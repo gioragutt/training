@@ -1,18 +1,16 @@
 #include "Logger.h"
-#include "file_not_found.h"
-#include <iomanip>
 
 using std::string;
 using std::stringstream;
 
-#pragma region C'tor D'tor VCATOI
+#pragma region Ctor Dtor VCATOI
 
 // Initializes an instance of the logger class
 // Parameters:
-//	* _fileNamelog :	file for output
-//	* _loggerName  :	name of the logger
-//	* _token	   :	token in print
-//	* _debugLevel  :	debug level
+//	* _fileNamelog :	File for output
+//	* _loggerName  :	Name of the logger
+//	* _token	   :	Token in print
+//	* _debugLevel  :	Debug level
 // Throws:
 //	* file_not_found exception when file doesn't exist
 Logger::Logger(const char* _fileName, ConStrRef _loggerName, ConStrRef _token, DebugLevel _debugLevel)
@@ -25,11 +23,11 @@ Logger::Logger(const char* _fileName, ConStrRef _loggerName, ConStrRef _token, D
 
 	// if file won't open, throw exception
 	if (!_file.is_open())
-		throw file_not_found(_fileName);
+		throw file_not_found();
 }
 
 // D'tor for logger
-// closes file if still open
+// Closes file if still open
 Logger::~Logger()
 {
 	if (_file.is_open())
@@ -40,19 +38,19 @@ Logger::~Logger()
 
 #pragma region Setters
 
-// sets the debug level of the logger
+// Sets the debug level
 void Logger::setDebugLevel(DebugLevel _newLevel)
 {
 	_debugLevel = _newLevel;
 }
 
-// sets the token
+// Sets the token
 void Logger::setToken(ConStrRef _newToken)
 {
 	_token = _newToken;
 }
 
-// sets the name
+// Sets the name
 void Logger::setName(ConStrRef _newLoggerName)
 {
 	_loggerName = _newLoggerName;
@@ -64,30 +62,43 @@ void Logger::setName(ConStrRef _newLoggerName)
 
 // Writes message to log
 // Parameters
-//	* level	  :		debug level (will print if debug level is high enough
-//	* message :		message to write to log
+//	* level	  :		Debug level (will print to screen if debug level is high enough)
+//	* message :		Message to write to log
 void Logger::write(DebugLevel level, ConStrRef message)
 {
-	// Check debug level is high enough
-	if (level <= _debugLevel)
+	stringstream print;
+	
+	// Get log print
+	print << getDebugLevelName(level) << " [ " << getTimeStamp() << " ] ";
+	if (_loggerName != "") { print << "[ " << _loggerName << " ] "; }
+	if (_token != "") { print << "[ " << _token << " ] "; }
+	print << ": " << message << std::endl;
+	
+	if (_file.is_open())
 	{
-		_file << getDebugLevelName(level) << " [ " << getTimeStamp() << " ] ";
-		if (_loggerName != "") { _file << "[ " << _loggerName << " ] "; }
-		if (_token != "") { _file << "[ " << _token << " ] "; }
-		_file << ": " << message << std::endl;
+		// Write log print and flush
+		_file << print.str();
+		_file.flush();
 	}
+
+	// If debug level is high enough, print to screen
+	if (level <= _debugLevel)
+		std::cout << print.str() << std::endl;
 }
 
+// Writes message in debug level
 void Logger::writeDebug(ConStrRef debugMessage)
 {
 	write(DebugLevel::DEBUG, debugMessage);
 }
 
+// Writes message in warning level
 void Logger::writeWarning(ConStrRef warningMessage)
 {
 	write(DebugLevel::WARNING, warningMessage);
 }
 
+// Writes message in info level
 void Logger::writeInfo(ConStrRef infoMessage)
 {
 	write(DebugLevel::INFO, infoMessage);
@@ -95,22 +106,26 @@ void Logger::writeInfo(ConStrRef infoMessage)
 
 #pragma endregion
 
-// gets the current time in format: DD/MM/YY HH:mm:SS
+// Gets the current time in format: DD/MM/YY HH:mm:SS
 string Logger::getTimeStamp()
 {
-	// variables for getting local time
+	// Variables for getting local time
 	time_t currentTime;
 	struct tm localTime;
 
-	/* get time */
+	// Get time
 	time(&currentTime);
 	localtime_s(&localTime, &currentTime);
 
-	// get values of time and date
-	int day  = localTime.tm_mday, month  = localTime.tm_mon + 1	, year	 = localTime.tm_year + 1900,
-		hour = localTime.tm_hour, minute = localTime.tm_min		, second = localTime.tm_sec;
+	// Get values of Date and Time
+	int year = localTime.tm_year + 1900;
+	int month = localTime.tm_mon + 1;
+	int day = localTime.tm_mday;
+	int hour = localTime.tm_hour;
+	int minute = localTime.tm_min;
+	int second = localTime.tm_sec;
 
-	// get time and date in correct format
+	// Get time and date in correct format
 	stringstream timeString;
 	timeString << (day < 10 ? "0" : "") << day << "/" 
 			   << (month < 10 ? "0" : "") << month << "/"
@@ -119,21 +134,21 @@ string Logger::getTimeStamp()
 			   << (minute < 10 ? "0" : "") << minute << ":"
 			   << (second < 10 ? "0" : "") << second;
 
-	// return formatted time and date
+	// Return formatted time and date
 	return timeString.str();
 }
 
-// get verbal for each debug level
-string Logger::getDebugLevelName(DebugLevel lvl)
+// Get verbal for each debug level
+string Logger::getDebugLevelName(DebugLevel level)
 {
-	switch (lvl)
+	switch (level)
 	{
 		case DebugLevel::WARNING:
-			return "WARNING";
+			return "WARNING\t";
 		case DebugLevel::INFO:
-			return "INFO";
+			return "INFO\t";
 		case DebugLevel::DEBUG:
-			return "DEBUG";
+			return "DEBUG\t";
 		default:
 			return "WRONG-DEBUG-LEVEL";
 	}

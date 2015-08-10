@@ -6,6 +6,7 @@
 #include <string>
 #include <ctime>
 #include <sstream>
+#include "file_not_found.h"
 
 typedef enum { INFO, WARNING, DEBUG } DebugLevel;
 typedef const std::string& ConStrRef;
