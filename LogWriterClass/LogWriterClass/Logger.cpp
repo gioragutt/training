@@ -40,6 +40,7 @@ void Logger::write(DebugLevel level, const string & message)
 	}
 }
 
+// sets the debug level of the logger
 void Logger::setDebugLevel(DebugLevel level)
 {
 	_debugLevel = level;
@@ -53,6 +54,7 @@ Logger::~Logger()
 		_file.close();
 }
 
+// gets the current time in format: DD/MM/YY HH:mm:SS
 string Logger::getTimeStamp()
 {
 	// variables for getting local time
