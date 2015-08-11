@@ -106,18 +106,27 @@ void Logger::writeInfo(ConStrRef infoMessage)
 
 #pragma endregion
 
-// Gets the current time in format: DD/MM/YY HH:mm:SS
-string Logger::getTimeStamp()
+#pragma region Helping Methods
+
+// Sets the current time into a struct tm pointer
+void getLocalTime(struct tm* timeptr)
 {
 	// Variables for getting local time
 	time_t currentTime;
-	struct tm localTime;
 
 	// Get time
 	time(&currentTime);
-	localtime_s(&localTime, &currentTime);
+	localtime_s(timeptr, &currentTime);
+}
 
-	// Get values of Date and Time
+// Gets the current time in format: DD/MM/YY HH:mm:SS
+string Logger::getTimeStamp()
+{
+	// Get local time into variable
+	struct tm localTime;
+	getLocalTime(&localTime);
+
+	// Get values of Date and Time from time variable
 	int year = localTime.tm_year + 1900;
 	int month = localTime.tm_mon + 1;
 	int day = localTime.tm_mday;
@@ -153,3 +162,5 @@ string Logger::getDebugLevelName(DebugLevel level)
 			return "WRONG-DEBUG-LEVEL";
 	}
 }
+
+#pragma endregion
