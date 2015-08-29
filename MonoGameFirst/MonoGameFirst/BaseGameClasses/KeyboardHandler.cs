@@ -8,37 +8,29 @@ using System.Threading;
 
 namespace MonoGameFirst.BaseGameClasses
 {
+    public delegate void KeyPressEventHandler();
+
     /// <summary>
-    /// Singleton class that handles key presses
+    /// A not-really Singleton class that handles key presses
     ///     - Subscribe to a keypress using SubscribeToKeyPressEvent()
     ///     - Unsubscribe from a keypress using UnsubscribeToKeyPressEvent()
     /// </summary>
-    public class KeyboardHandler
+    public static class KeyboardHandler
     {
         #region Data Members
 
-        public delegate void KeyPressEventHandler();
-        private static KeyboardHandler instance;
-        public Dictionary<Keys, KeyPressEventHandler> KeypressHandlers;
+        private static Dictionary<Keys, KeyPressEventHandler> KeypressHandlers;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initialize the static instance (singleton)
+        /// Initialize the dictionary
         /// </summary>
         static KeyboardHandler()
         {
-            instance = new KeyboardHandler();
-        }
-
-        /// <summary>
-        /// Initialize the KeypressHandlers dictionary
-        /// </summary>
-        private KeyboardHandler()
-        {
-            this.KeypressHandlers = new Dictionary<Keys, KeyPressEventHandler>();
+            KeypressHandlers = new Dictionary<Keys, KeyPressEventHandler>();
         }
 
         #endregion
@@ -49,12 +41,11 @@ namespace MonoGameFirst.BaseGameClasses
         /// Tries to activate a KeyPressEventHandler method
         /// </summary>
         /// <param name="handler"></param>
-        public void OnKeyPressed(KeyPressEventHandler handler)
+        private static void OnKeyPressed(KeyPressEventHandler handler)
         {
             if (handler != null)
                 handler();
         }
-
 
         /// <summary>
         /// Subscribes a method to a certain key's keypress handler
@@ -63,14 +54,10 @@ namespace MonoGameFirst.BaseGameClasses
         /// <param name="method">a void() method</param>
         public static void SubscribeToKeyPressEvent(Keys key, KeyPressEventHandler method)
         {
-            instance.SubscribeToKeyPressEventImpl(key, method);
-        }
-        public void SubscribeToKeyPressEventImpl(Keys key, KeyPressEventHandler method)
-        {
-            if(!this.KeypressHandlers.ContainsKey(key))
-                this.KeypressHandlers[key] = method;
+            if(!KeypressHandlers.ContainsKey(key))
+                KeypressHandlers[key] = method;
             else
-                this.KeypressHandlers[key] += method;
+                KeypressHandlers[key] += method;
         }
 
 
@@ -81,12 +68,8 @@ namespace MonoGameFirst.BaseGameClasses
         /// <param name="method">a void() method</param>
         public static void UnsubscribeToKeyPressEvent(Keys key, KeyPressEventHandler method)
         {
-            instance.UnsubscribeToKeyPressEventImpl(key, method);
-        }
-        public void UnsubscribeToKeyPressEventImpl(Keys key, KeyPressEventHandler method)
-        {
-            if (this.KeypressHandlers.ContainsKey(key))
-                this.KeypressHandlers[key] -= method;
+            if (KeypressHandlers.ContainsKey(key))
+                KeypressHandlers[key] -= method;
         }
 
         #endregion
@@ -98,24 +81,24 @@ namespace MonoGameFirst.BaseGameClasses
         /// </summary>
         public static void StartKeyboardHandler()
         {
-            Thread keyboardHandlingThread = new Thread(instance.ThreadMethod);
+            Thread keyboardHandlingThread = new Thread(ThreadMethod);
             keyboardHandlingThread.Start();
         }
 
         /// <summary>
         /// constantly activates methods that are subscribed to key presses in the KeypressHandlers dictionary
         /// </summary>
-        private void ThreadMethod()
+        private static void ThreadMethod()
         {
             KeyboardState state = Keyboard.GetState();
             while (true)
             {
                 state = Keyboard.GetState();
 
-                foreach (Keys key in this.KeypressHandlers.Keys)
+                foreach (Keys key in KeypressHandlers.Keys)
                 {
                     if (state.IsKeyDown(key))
-                        OnKeyPressed(this.KeypressHandlers[key]);
+                        OnKeyPressed(KeypressHandlers[key]);
                 }
 
                 Thread.Sleep(10);
