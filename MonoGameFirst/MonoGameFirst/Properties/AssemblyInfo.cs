@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("StocksTrain")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("MonoGameFirst")]
+[assembly: AssemblyProduct("MonoGameFirst")]
 [assembly: AssemblyConfiguration("")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("StocksTrain")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9525c959-5bdb-4963-be37-d6a0ecbf973a")]
+[assembly: Guid("63b5f857-be9b-4a4e-ac9f-88bbfff35f69")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("3.4.0.456")]
+[assembly: AssemblyFileVersion("3.4.0.456")]
