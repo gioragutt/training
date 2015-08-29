@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BaseGameClasses\IKeyboardHandled.cs" />
     <Compile Include="BaseGameClasses\KeyboardHandler.cs" />
     <Compile Include="BaseGameClasses\Player.cs" />
     <Compile Include="BaseGameClasses\PlayerStats.cs" />

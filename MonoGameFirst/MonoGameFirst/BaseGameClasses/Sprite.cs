@@ -7,32 +7,81 @@ namespace MonoGameFirst
     {
         #region Data Members
 
-        public Rectangle Rectangle;
+        private Vector2 m_position;
 
-        #endregion Data Members
+        #endregion
 
         #region Properties
 
+        public Vector2 Position
+        {
+            get
+            {
+                return m_position;
+            }
+            set
+            {
+                m_position = value;
+            }
+        }
+
+        public float X
+        {
+            get
+            {
+                return m_position.X;
+            }
+            set
+            {
+                m_position.X = value;
+            }
+        }
+
+        public float Y
+        {
+            get
+            {
+                return m_position.Y;
+            }
+            set
+            {
+                m_position.Y = value;
+            }
+        }
+
         public Texture2D Texture
         {
-            get;
-            set;
+            get; set;
+        }
+
+        public int Width
+        {
+            get
+            {
+                return Texture.Width;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return Texture.Height;
+            }
         }
 
         #endregion
 
         #region Public Constructors
 
-        public Sprite(Rectangle rectangle, Texture2D texture)
-        {
-            this.Rectangle = rectangle;
-            this.Texture = texture;
-        }
+        public Sprite(Texture2D texture, int x_pos, int y_pos) 
+            : this(texture, new Vector2((float)x_pos, (float)y_pos))
+        { }
 
-        public Sprite(Texture2D texture, int x_pos, int y_pos)
+        public Sprite(Texture2D texture, Vector2 position)
         {
+            this.Position = position;
             this.Texture = texture;
-            this.Rectangle = new Rectangle(x_pos, y_pos, this.Texture.Width, this.Texture.Height);
         }
 
         #endregion Public Constructors
@@ -41,7 +90,7 @@ namespace MonoGameFirst
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(this.Texture, this.Rectangle, Color.White);
+            spriteBatch.Draw(Texture, Position, Color.White);
         }
 
         #endregion Public Methods

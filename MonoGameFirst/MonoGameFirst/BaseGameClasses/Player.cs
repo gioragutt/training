@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -7,29 +8,41 @@ using System.Text;
 
 namespace MonoGameFirst.BaseGameClasses
 {
-    public class Player
+    public class Player : IKeyboardHandled
     {
         #region Properties
 
-        public PlayerStats Stats
-        {
-            get; set;
-        }
-
+        /// <summary>
+        /// Gets and sets the ID of the player (for future multiplayer needs)
+        /// </summary>
         public int ID
         {
             get; set;
         }
 
-        public Sprite Sprite
+        /// <summary>
+        /// Stats of the player
+        /// </summary>
+        public PlayerStats Stats
         {
-            get; set;
+            get; private set;
         }
 
+        /// <summary>
+        /// Gets whether the player is subscibed to the keyboard handler
+        /// </summary>
         public bool IsSubscribedToKeyboardHandler
         {
             get;
-            set;
+            private set;
+        }
+
+        /// <summary>
+        /// The sprite of the player
+        /// </summary>
+        public Sprite Sprite
+        {
+            get; set;
         }
 
         #endregion
@@ -51,24 +64,31 @@ namespace MonoGameFirst.BaseGameClasses
 
         #region Private Methods
 
+        #region Basic methods (that subscribe to Keyboard handler)
+
         private void MoveUp()
         {
-            Sprite.Rectangle.Y -= Stats.MoveSpeed;
+            Sprite.Y -= Stats.MoveSpeed;
         }
         private void MoveDown()
         {
-            Sprite.Rectangle.Y += Stats.MoveSpeed;
+            Sprite.Y += Stats.MoveSpeed;
         }
         private void MoveLeft()
         {
-            Sprite.Rectangle.X -= Stats.MoveSpeed;
+            Sprite.X -= Stats.MoveSpeed;
         }
         private void MoveRight()
         {
-            Sprite.Rectangle.X += Stats.MoveSpeed;
+            Sprite.X += Stats.MoveSpeed;
         }
 
-        private void SubscribeToKeyboardHandler()
+        #endregion
+
+        /// <summary>
+        /// Subscribes the player to the keyboard handler
+        /// </summary>
+        public void SubscribeToKeyboardHandler()
         {
             if (IsSubscribedToKeyboardHandler == false)
             {
@@ -80,7 +100,10 @@ namespace MonoGameFirst.BaseGameClasses
             IsSubscribedToKeyboardHandler = true;
         }
 
-        private void UnubscribeFromKeyboardHandler()
+        /// <summary>
+        /// Unubscribe the player from the keyboard handler
+        /// </summary>
+        public void UnubscribeFromKeyboardHandler()
         {
             if (IsSubscribedToKeyboardHandler == true)
             {
@@ -108,9 +131,9 @@ namespace MonoGameFirst.BaseGameClasses
 
         #region Public Methods
 
-        public void LoadSprite(Texture2D texture, int starting_x_pos, int starting_y_pos)
+        public void LoadContent(ContentManager manager, string assetName, int starting_x_pos, int starting_y_pos)
         {
-            Sprite = new Sprite(texture, starting_x_pos, starting_y_pos);
+            Sprite = new Sprite(manager.Load<Texture2D>(assetName), starting_x_pos, starting_y_pos);
         }
 
         public void Draw(SpriteBatch spriteBatch)

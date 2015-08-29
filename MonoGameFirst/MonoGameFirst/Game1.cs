@@ -34,10 +34,7 @@ namespace MonoGameFirst
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            foreach (Keys x in Enum.GetValues(typeof(Keys)))
-            {
 
-            }
         }
 
         protected override void Initialize()
@@ -50,7 +47,7 @@ namespace MonoGameFirst
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player.LoadSprite(this.Content.Load<Texture2D>(@"player_image"), 10, 10);
+            Player.LoadContent(this.Content, "player_image", 10, 10);
         }
 
         protected override void UnloadContent()
@@ -66,7 +63,7 @@ namespace MonoGameFirst
         protected override void Update(GameTime gameTime)
         {
             CurrState = Keyboard.GetState();
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || CurrState.IsKeyDown(Keys.Escape))
+            if (CurrState.IsKeyDown(Keys.Escape))
                 Exit();
 
             if (CurrState.IsKeyDown(Keys.Space) && !PrevState.IsKeyDown(Keys.Space))
