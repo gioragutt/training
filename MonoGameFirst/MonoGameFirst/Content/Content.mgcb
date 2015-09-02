@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin player_image.png
+#begin GotSprites/Back_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -22,5 +22,132 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:TextureFormat=Color
-/build:player_image.png
+/build:GotSprites/Back_1.png
+
+#begin GotSprites/Back_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Back_2.png
+
+#begin GotSprites/Back_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Back_3.png
+
+#begin GotSprites/Front_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Front_1.png
+
+#begin GotSprites/Front_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Front_2.png
+
+#begin GotSprites/Front_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Front_3.png
+
+#begin GotSprites/Left_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Left_1.png
+
+#begin GotSprites/Left_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Left_2.png
+
+#begin GotSprites/Left_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Left_3.png
+
+#begin GotSprites/Right_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Right_1.png
+
+#begin GotSprites/Right_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Right_2.png
+
+#begin GotSprites/Right_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:GotSprites/Right_3.png
+
+#begin UI/MainFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:UI/MainFont.spritefont
 

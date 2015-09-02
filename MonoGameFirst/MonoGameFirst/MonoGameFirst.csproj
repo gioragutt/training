@@ -39,9 +39,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseGameClasses\IKeyboardHandled.cs" />
+    <Compile Include="BaseGameClasses\IDrawsOnUI.cs" />
     <Compile Include="BaseGameClasses\KeyboardHandler.cs" />
     <Compile Include="BaseGameClasses\Player.cs" />
     <Compile Include="BaseGameClasses\PlayerStats.cs" />
+    <Compile Include="BaseGameClasses\UI.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -52,6 +54,8 @@
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

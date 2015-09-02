@@ -88,9 +88,9 @@ namespace MonoGameFirst
 
         #region Public Methods
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, float scale)
         {
-            spriteBatch.Draw(Texture, Position, Color.White);
+            spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
 
         #endregion Public Methods

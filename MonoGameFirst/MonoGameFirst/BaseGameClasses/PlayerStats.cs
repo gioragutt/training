@@ -75,6 +75,14 @@ namespace MonoGameFirst.BaseGameClasses
             }
         }
 
+        public float PercentHealth
+        {
+            get
+            {
+                return (float)Health / MaxHealth;
+            }                
+        }
+
         #endregion Properties
     }
 }
