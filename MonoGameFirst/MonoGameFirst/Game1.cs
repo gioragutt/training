@@ -6,9 +6,6 @@ using MonoGameFirst.BaseGameClasses.Player_Classes;
 
 namespace MonoGameFirst
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class MainGame : Game
     {
         #region Data Members
@@ -31,7 +28,18 @@ namespace MonoGameFirst
         public Player Player { get; set; }
 
         #endregion
-        
+
+        #region Constructor
+
+        public MainGame()
+        {
+            Graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+            Player = new Player();
+        }
+
+        #endregion
+
         #region Methods
 
         public void ToggleFullScreen()
@@ -48,13 +56,6 @@ namespace MonoGameFirst
                 this.Graphics.PreferredBackBufferWidth = bounds.Width;
             }
             this.Graphics.ToggleFullScreen();
-        }
-
-        public MainGame()
-        {
-            Graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            Player = new Player();
         }
 
         protected override void Initialize()
@@ -95,10 +96,10 @@ namespace MonoGameFirst
             Player.Update(gameTime);
 
             if (currState.IsKeyDown(Keys.Add))
-                ++Player.Stats.Health;
+                ++Player.Health;
 
             if (currState.IsKeyDown(Keys.Subtract))
-                --Player.Stats.Health;
+                --Player.Health;
 
             if (currState.IsKeyDown(Keys.Space) && !prevState.IsKeyDown(Keys.Space))
                 Player.ToggleSubscriptionToKeyboardHandler();

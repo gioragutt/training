@@ -21,6 +21,7 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         #region Data Members
 
         private Vector2 currentFrame;
+        private int health;
 
         #endregion
 
@@ -33,17 +34,33 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         /// </summary>
         public int ID { get; set; }
 
-        /// <summary>
-        /// Stats of the player
-        /// </summary>
-        public PlayerStats Stats { get; private set; }
-
-        /// <summary>
-        /// Gets whether the player is subscibed to the keyboard handler
-        /// </summary>
         public bool IsSubscribedToKeyboardHandler { get; private set; }
+        
+        #region Inventory and Stats Properties
 
-        public Inventory Inventory { get; set; }
+        public Inventory Inventory
+        { get; set; }
+
+        private PlayerStats BaseStats
+        { get; }
+
+        public PlayerStats Stats
+        {
+            get { return BaseStats + Inventory.Stats; }
+        }
+
+        public float PercentHealth
+        {
+            get { return (Health > Stats.MaxHealth) ? 1f : (float)Health / Stats.MaxHealth; }
+        }
+
+        public int Health
+        {
+            get { return health; }
+            set { health = value < 0 ? 0 : value > Stats.MaxHealth ? Stats.MaxHealth : value; }
+        } 
+
+        #endregion
 
         #region Animation Related Properties
 
@@ -57,9 +74,8 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         /// </summary>
         public Texture2D[,] SpriteSheet { get; set; }
 
+        // ReSharper disable once UnusedAutoPropertyAccessor.Local
         private Direction Direction { get; set; }
-
-        private Vector2 PreviousPosition { get; set; }
 
         private int FrameCounter { get; set; }
 
@@ -74,18 +90,10 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         public Player()
         {
             FrameCounter = 0;
-            Stats = new PlayerStats()
-            {
-                MaxHealth = 100,
-                Health = 50,
-                MoveSpeed = 5
-            };
-
-            ShouldDraw = true;
-
+            BaseStats = PlayerStats.Create(maxHealth: 100, movespeed: 5);
             Inventory = new Inventory(this);
-            UI.SubscribeToUIDraw(UIDraw);
-            SubscribeToKeyboardHandler();
+            Health = 50;
+            ShouldDraw = true;
         }
 
         #endregion
@@ -94,11 +102,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         #region Methods that are subscribed
 
-        private void CommonBeforeMovement()
-        {
-            PreviousPosition = Sprite.Position;
-        }
-
         private void CommonAfterMovement()
         {
             IsAnimationActive = true;
@@ -106,7 +109,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         private void UpMovement()
         {
-            CommonBeforeMovement();
             MoveUpImpl();
             ChangeAnimToUp();
             CommonAfterMovement();
@@ -114,7 +116,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         private void DownMovement()
         {
-            CommonBeforeMovement();
             MoveDownImpl();
             ChangeAnimToDown();
             CommonAfterMovement();
@@ -122,7 +123,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         private void LeftMovement()
         {
-            CommonBeforeMovement();
             MoveLeftImpl();
             ChangeAnimToLeft();
             CommonAfterMovement();
@@ -130,7 +130,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         private void RightMovement()
         {
-            CommonBeforeMovement();
             MoveRightImpl();
             ChangeAnimToRight();
             CommonAfterMovement();
@@ -166,22 +165,22 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         private void MoveUpImpl()
         {
-            Sprite.Y -= Stats.MoveSpeed;
+            Sprite.Y -= BaseStats.MoveSpeed;
         }
 
         private void MoveDownImpl()
         {
-            Sprite.Y += Stats.MoveSpeed;
+            Sprite.Y += BaseStats.MoveSpeed;
         }
 
         private void MoveLeftImpl()
         {
-            Sprite.X -= Stats.MoveSpeed;
+            Sprite.X -= BaseStats.MoveSpeed;
         }
 
         private void MoveRightImpl()
         {
-            Sprite.X += Stats.MoveSpeed;
+            Sprite.X += BaseStats.MoveSpeed;
         }
 
         private void ChangeAnimToUp()
@@ -205,6 +204,11 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         }
 
         #endregion
+
+        public void ValidateStats()
+        {
+            Health = Health;
+        }
 
         #endregion
 
@@ -234,7 +238,7 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         /// </summary>
         public void UnubscribeFromKeyboardHandler()
         {
-            if (IsSubscribedToKeyboardHandler == true)
+            if (IsSubscribedToKeyboardHandler)
             {
                 KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.Down, AttackDown);
                 KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.Up, AttackUp);
@@ -255,9 +259,9 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         public void ToggleSubscriptionToKeyboardHandler(bool toSubscribe = true)
         {
             if (!IsSubscribedToKeyboardHandler && toSubscribe)
-                this.SubscribeToKeyboardHandler();
+                SubscribeToKeyboardHandler();
             else
-                this.UnubscribeFromKeyboardHandler();
+                UnubscribeFromKeyboardHandler();
         }
 
         #endregion
@@ -266,18 +270,18 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         private void SetCurrentFrame(Vector2 frameToSet)
         {
-            Sprite.Texture = SpriteSheet[(int) frameToSet.X, (int) frameToSet.Y];
+            Sprite.Texture = SpriteSheet[(int)frameToSet.X, (int)frameToSet.Y];
         }
 
         private void UpdateAnimation(GameTime gameTime)
         {
             if (IsAnimationActive)
             {
-                FrameCounter += (int) gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (FrameCounter >= 60)
+                FrameCounter += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (FrameCounter >= 100)
                 {
                     FrameCounter = 0;
-                    currentFrame.Y = (currentFrame.Y + 1)%SpriteSheet.GetLength(1);
+                    currentFrame.Y = (currentFrame.Y + 1) % SpriteSheet.GetLength(1);
                 }
             }
             else
@@ -295,13 +299,15 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         public void Initialize()
         {
+            UI.SubscribeToUIDraw(UIDraw);
+            SubscribeToKeyboardHandler();
             Inventory.Initialize();
         }
 
         public void LoadContent(ContentManager manager, int startingXPos, int startingYPos)
         {
             Func<string, Texture2D> loadText = manager.Load<Texture2D>;
-            SpriteSheet = new Texture2D[4, 4]
+            SpriteSheet = new Texture2D[,]
             {
                 {
                     loadText("GotSprites/Back_2"), loadText("GotSprites/Back_1"), loadText("GotSprites/Back_2"),
@@ -321,7 +327,7 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
                 }
             };
             currentFrame = new Vector2(2f, 0f);
-            Sprite = new Sprite(SpriteSheet[(int) currentFrame.X, (int) currentFrame.Y], startingXPos, startingYPos);
+            Sprite = new Sprite(SpriteSheet[(int)currentFrame.X, (int)currentFrame.Y], startingXPos, startingYPos);
         }
 
         public void Update(GameTime gameTime)
@@ -339,12 +345,16 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         {
             if (!ShouldDraw)
                 return;
-            int startingWidth = spriteBatch.GraphicsDevice.Viewport.Width/2 - 100;
-            string hpString = string.Format("HP:{0}", this.Stats.Health.ToString().PadLeft(4));
+            Texture2D healthBarBackgroundTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
+            healthBarBackgroundTexture.SetData(new[] { Color.AntiqueWhite });
+            int startingWidth = spriteBatch.GraphicsDevice.Viewport.Width / 2 - 100;
+            string hpString = string.Format("HP:{0}", Health.ToString().PadLeft(4));
             Vector2 hpFontSize = UI.Font.MeasureString(hpString);
-            spriteBatch.DrawString(UI.Font, hpString, new Vector2((float) startingWidth, 10f), Color.Black);
-            spriteBatch.Draw(UI.PlayerHealthTexture, new Rectangle(startingWidth + 5 + (int) hpFontSize.X, 10,
-                             (int)(150f*this.Stats.PercentHealth), (int)hpFontSize.Y), Color.Red);
+            spriteBatch.DrawString(UI.Font, hpString, new Vector2(startingWidth, 10f), Color.Black);
+            spriteBatch.Draw(healthBarBackgroundTexture,
+                new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10, 150, (int)hpFontSize.Y), Color.White);
+            spriteBatch.Draw(UI.PlayerHealthTexture, new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10,
+                (int)(150f * PercentHealth), (int)hpFontSize.Y), Color.Red);
         }
 
         #endregion

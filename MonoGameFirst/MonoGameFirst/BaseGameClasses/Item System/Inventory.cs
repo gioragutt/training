@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGameFirst.BaseGameClasses.Interfaces;
@@ -14,6 +15,18 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
 
         public Player Player { get; private set; }
         private Dictionary<ItemType, Slot> Slots { get; set; }
+
+        public PlayerStats Stats
+        {
+            get
+            {
+                PlayerStats stats = PlayerStats.Create();
+                foreach (var slot in Slots)
+                    if(slot.Value.Item != null)
+                        stats = stats + slot.Value.Item.Stats;
+                return stats;
+            }
+        }
 
         #endregion
 
@@ -38,7 +51,10 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
         public void UnequipItem(Item item)
         {
             if (Slots.ContainsKey(item.Type) && Slots[item.Type].Item == item)
+            {
                 Slots[item.Type].UnsetItem();
+                Player.ValidateStats();
+            }
         }
 
         #endregion
@@ -76,10 +92,10 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
             #region Variables and Constants
 
             const int WIDTH = 20;
-            const string FORMAT = "{0,-8}{1,-18}{2,-11}{3,-8}{4,-15}";
-            const string UNDERLINE = "------- ----------------- ---------- ------- ---------------";
-            string titleHead = string.Format(FORMAT, "Index", "Name", "Type", "Cost", "Description");
-            string title = titleHead + '\n' + UNDERLINE;
+            const string FORMAT = "{0} {1,-12}{2,-17}{3,-8}{4,-15}";
+            const string UNDERLINE = "------------  ---------------  ------  -----------------";
+            const string TITLE_HEAD = "INDEX         NAME             COST    DESCRIPTION";
+            string title = TITLE_HEAD + '\n' + UNDERLINE;
             int height = 40;
 
             #endregion
@@ -94,9 +110,9 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
             foreach (var slot in Slots)
             {
                 var name = slot.Value.Item != null
-                    ? string.Format(format, slot.Value.Index, slot.Value.Item.Name, slot.Value.ItemType,
+                    ? string.Format(format, slot.Value.Index, slot.Value.ItemType, slot.Value.Item.Name,
                         slot.Value.Item.Cost, slot.Value.Item.Description)
-                    : slot.Value.Index.ToString();
+                    : slot.Value.Index.ToString() + " " + slot.Key.ToString();
                 Vector2 sizeOfMessage = UI.Font.MeasureString(name);
                 spriteBatch.DrawString(UI.Font, name, new Vector2(width, height), Color.Black);
                 height += (int)sizeOfMessage.Y + 5;

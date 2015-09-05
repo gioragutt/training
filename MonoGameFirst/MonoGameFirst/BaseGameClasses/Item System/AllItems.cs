@@ -1,4 +1,6 @@
-﻿namespace MonoGameFirst.BaseGameClasses.Item_System
+﻿using MonoGameFirst.BaseGameClasses.Player_Classes;
+
+namespace MonoGameFirst.BaseGameClasses.Item_System
 {
     public static class AllItems
     {
@@ -7,8 +9,19 @@
 
         static AllItems()
         {
-            TestWeapon = new Weapon("Test Weapon", 999, "Just a test weapon");
-            TestConsumable = new Consumable("Test Consumable", 9999, "Just a test consumable");
+            TestWeapon = 
+                new Weapon(
+                    name: "Test Weapon",
+                    cost: 999,
+                    description: "Just a test weapon",
+                    playerStats: PlayerStats.Create(maxHealth: 10, movespeed: 2));
+
+            TestConsumable =
+                new Consumable(
+                    name: "Test Consumable",
+                    cost: 9999,
+                    description: "Just a test consumable",
+                    playerStats:PlayerStats.Create());
         }
     }
 }
