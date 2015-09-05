@@ -38,16 +38,20 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BaseGameClasses\IKeyboardHandled.cs" />
-    <Compile Include="BaseGameClasses\IDrawsOnUI.cs" />
+    <Compile Include="BaseGameClasses\Item System\AllItems.cs" />
+    <Compile Include="BaseGameClasses\Interfaces\IKeyboardHandled.cs" />
+    <Compile Include="BaseGameClasses\Interfaces\IDrawsOnUI.cs" />
+    <Compile Include="BaseGameClasses\Item System\Inventory.cs" />
+    <Compile Include="BaseGameClasses\Item System\Item.cs" />
+    <Compile Include="BaseGameClasses\Item System\Slot.cs" />
     <Compile Include="BaseGameClasses\KeyboardHandler.cs" />
-    <Compile Include="BaseGameClasses\Player.cs" />
-    <Compile Include="BaseGameClasses\PlayerStats.cs" />
+    <Compile Include="BaseGameClasses\Player Classes\Player.cs" />
+    <Compile Include="BaseGameClasses\Player Classes\PlayerStats.cs" />
     <Compile Include="BaseGameClasses\UI.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BaseGameClasses\Sprite.cs" />
+    <Compile Include="BaseGameClasses\Player Classes\Sprite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

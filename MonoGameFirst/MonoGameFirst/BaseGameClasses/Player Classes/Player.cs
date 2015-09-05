@@ -1,79 +1,69 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using MonoGameFirst.BaseGameClasses.Interfaces;
+using MonoGameFirst.BaseGameClasses.Item_System;
 
-namespace MonoGameFirst.BaseGameClasses
+namespace MonoGameFirst.BaseGameClasses.Player_Classes
 {
-    enum Direction
+    internal enum Direction
     {
         Up,
         Right,
         Down,
         Left
     }
+
     public class Player : IKeyboardHandled, IDrawsOnUI
     {
+        #region Data Members
+
+        private Vector2 currentFrame;
+
+        #endregion
+
         #region Properties
+
+        public bool ShouldDraw { get; set; }
 
         /// <summary>
         /// Gets and sets the ID of the player (for future multiplayer needs)
         /// </summary>
-        public int ID
-        {
-            get; set;
-        }
+        public int ID { get; set; }
 
         /// <summary>
         /// Stats of the player
         /// </summary>
-        public PlayerStats Stats
-        {
-            get; private set;
-        }
+        public PlayerStats Stats { get; private set; }
 
         /// <summary>
         /// Gets whether the player is subscibed to the keyboard handler
         /// </summary>
-        public bool IsSubscribedToKeyboardHandler
-        {
-            get;
-            private set;
-        }
+        public bool IsSubscribedToKeyboardHandler { get; private set; }
+
+        public Inventory Inventory { get; set; }
+
+        #region Animation Related Properties
 
         /// <summary>
         /// The sprite of the player
         /// </summary>
-        public Sprite Sprite
-        {
-            get; set;
-        }
+        public Sprite Sprite { get; set; }
 
-        public Texture2D[,] SpriteSheet
-        {
-            get;
-            set;
-        }
+        /// <summary>
+        /// Gets the spritesheet of the character
+        /// </summary>
+        public Texture2D[,] SpriteSheet { get; set; }
 
-        #region Animation Related Properties
+        private Direction Direction { get; set; }
 
-        private Direction Direction
-        { get; set; }
+        private Vector2 PreviousPosition { get; set; }
 
-        private Vector2 PreviousPosition
-        { get; set; }
+        private int FrameCounter { get; set; }
 
-        private int FrameCounter
-        { get; set; }
-
-        private Vector2 CurrentFrame;
-
-        private bool IsAnimationActive
-        { get; set; }
+        private bool IsAnimationActive { get; set; }
 
         #endregion
 
@@ -86,18 +76,21 @@ namespace MonoGameFirst.BaseGameClasses
             FrameCounter = 0;
             Stats = new PlayerStats()
             {
-                Health = 50,
                 MaxHealth = 100,
-                MoveSpeed = 3
+                Health = 50,
+                MoveSpeed = 5
             };
 
+            ShouldDraw = true;
+
+            Inventory = new Inventory(this);
             UI.SubscribeToUIDraw(UIDraw);
             SubscribeToKeyboardHandler();
         }
 
         #endregion
 
-        #region Basic methods
+        #region Basic Methods
 
         #region Methods that are subscribed
 
@@ -193,22 +186,22 @@ namespace MonoGameFirst.BaseGameClasses
 
         private void ChangeAnimToUp()
         {
-            CurrentFrame.X = 0;
+            currentFrame.X = 0;
         }
 
         private void ChangeAnimToDown()
         {
-            CurrentFrame.X = 2;
+            currentFrame.X = 2;
         }
 
         private void ChangeAnimToLeft()
         {
-            CurrentFrame.X = 3;
+            currentFrame.X = 3;
         }
 
         private void ChangeAnimToRight()
         {
-            CurrentFrame.X = 1;
+            currentFrame.X = 1;
         }
 
         #endregion
@@ -271,28 +264,28 @@ namespace MonoGameFirst.BaseGameClasses
 
         #region Animation Methods
 
-        private void SetCurrentFrame(Vector2 currentFrame)
+        private void SetCurrentFrame(Vector2 frameToSet)
         {
-            Sprite.Texture = SpriteSheet[(int)currentFrame.X, (int)currentFrame.Y];
+            Sprite.Texture = SpriteSheet[(int) frameToSet.X, (int) frameToSet.Y];
         }
 
         private void UpdateAnimation(GameTime gameTime)
         {
             if (IsAnimationActive)
             {
-                FrameCounter += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                FrameCounter += (int) gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (FrameCounter >= 60)
                 {
                     FrameCounter = 0;
-                    CurrentFrame.Y = (CurrentFrame.Y + 1) % SpriteSheet.GetLength(1);
+                    currentFrame.Y = (currentFrame.Y + 1)%SpriteSheet.GetLength(1);
                 }
             }
             else
             {
                 FrameCounter = 0;
-                CurrentFrame.Y = 0;
+                currentFrame.Y = 0;
             }
-            SetCurrentFrame(CurrentFrame);
+            SetCurrentFrame(currentFrame);
             IsAnimationActive = false;
         }
 
@@ -300,22 +293,41 @@ namespace MonoGameFirst.BaseGameClasses
 
         #region XNA Methods
 
-        public void LoadContent(ContentManager manager,  int starting_x_pos, int starting_y_pos)
+        public void Initialize()
         {
-            Func<string, Texture2D> loadText = (name) => manager.Load<Texture2D>(name);
-            SpriteSheet = new Texture2D[4, 4] {
-                { loadText("GotSprites/Back_2") , loadText("GotSprites/Back_1"), loadText("GotSprites/Back_2"), loadText("GotSprites/Back_3") } ,
-                { loadText("GotSprites/Right_2"), loadText("GotSprites/Right_1"), loadText("GotSprites/Right_2"), loadText("GotSprites/Right_3") } ,
-                { loadText("GotSprites/Front_2"), loadText("GotSprites/Front_1"), loadText("GotSprites/Front_2"), loadText("GotSprites/Front_3") } ,
-                { loadText("GotSprites/Left_2"), loadText("GotSprites/Left_1"), loadText("GotSprites/Left_2"), loadText("GotSprites/Left_3") }
+            Inventory.Initialize();
+        }
+
+        public void LoadContent(ContentManager manager, int startingXPos, int startingYPos)
+        {
+            Func<string, Texture2D> loadText = manager.Load<Texture2D>;
+            SpriteSheet = new Texture2D[4, 4]
+            {
+                {
+                    loadText("GotSprites/Back_2"), loadText("GotSprites/Back_1"), loadText("GotSprites/Back_2"),
+                    loadText("GotSprites/Back_3")
+                },
+                {
+                    loadText("GotSprites/Right_2"), loadText("GotSprites/Right_1"), loadText("GotSprites/Right_2"),
+                    loadText("GotSprites/Right_3")
+                },
+                {
+                    loadText("GotSprites/Front_2"), loadText("GotSprites/Front_1"), loadText("GotSprites/Front_2"),
+                    loadText("GotSprites/Front_3")
+                },
+                {
+                    loadText("GotSprites/Left_2"), loadText("GotSprites/Left_1"), loadText("GotSprites/Left_2"),
+                    loadText("GotSprites/Left_3")
+                }
             };
-            CurrentFrame = new Vector2(2f, 0f);
-            Sprite = new Sprite(SpriteSheet[(int)CurrentFrame.X, (int)CurrentFrame.Y], starting_x_pos, starting_y_pos);
+            currentFrame = new Vector2(2f, 0f);
+            Sprite = new Sprite(SpriteSheet[(int) currentFrame.X, (int) currentFrame.Y], startingXPos, startingYPos);
         }
 
         public void Update(GameTime gameTime)
         {
             UpdateAnimation(gameTime);
+            Inventory.Update();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -325,11 +337,14 @@ namespace MonoGameFirst.BaseGameClasses
 
         public void UIDraw(SpriteBatch spriteBatch)
         {
-            int startingWidth = spriteBatch.GraphicsDevice.Viewport.Width / 2 - 100;
+            if (!ShouldDraw)
+                return;
+            int startingWidth = spriteBatch.GraphicsDevice.Viewport.Width/2 - 100;
             string hpString = string.Format("HP:{0}", this.Stats.Health.ToString().PadLeft(4));
-            Vector2 HpFontSize = UI.Font.MeasureString(hpString);
-            spriteBatch.DrawString(UI.Font, hpString, new Vector2((float)startingWidth, 10f), Color.Black);
-            spriteBatch.Draw(UI.PlayerHealthTexture, new Rectangle(startingWidth + 5 + (int)HpFontSize.X, 10, (int)(150f * this.Stats.PercentHealth), (int)HpFontSize.Y), Color.Red);
+            Vector2 hpFontSize = UI.Font.MeasureString(hpString);
+            spriteBatch.DrawString(UI.Font, hpString, new Vector2((float) startingWidth, 10f), Color.Black);
+            spriteBatch.Draw(UI.PlayerHealthTexture, new Rectangle(startingWidth + 5 + (int) hpFontSize.X, 10,
+                             (int)(150f*this.Stats.PercentHealth), (int)hpFontSize.Y), Color.Red);
         }
 
         #endregion

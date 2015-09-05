@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 using Microsoft.Xna.Framework.Input;
 using System.Threading;
 
@@ -11,26 +8,26 @@ namespace MonoGameFirst.BaseGameClasses
     public delegate void KeyPressEventHandler();
 
     /// <summary>
-    /// A not-really Singleton class that handles key presses
-    ///     - Subscribe to a keypress using SubscribeToKeyPressEvent()
-    ///     - Unsubscribe from a keypress using UnsubscribeToKeyPressEvent()
+    /// A static class that handles key presses
     /// </summary>
     public static class KeyboardHandler
     {
         #region Data Members
 
-        private static Dictionary<Keys, KeyPressEventHandler> KeypressHandlers;
+        private static readonly Dictionary<Keys, KeyPressEventHandler> KeypressHandlers;
+
+        private static KeyboardState Curr { get; set; }
+        private static KeyboardState Prev { get; set; }
 
         #endregion
 
         #region Constructors
 
-        /// <summary>
-        /// Initialize the dictionary
-        /// </summary>
         static KeyboardHandler()
         {
             KeypressHandlers = new Dictionary<Keys, KeyPressEventHandler>();
+            Prev = Keyboard.GetState();
+            Curr = Keyboard.GetState();
         }
 
         #endregion
@@ -43,8 +40,7 @@ namespace MonoGameFirst.BaseGameClasses
         /// <param name="handler"></param>
         private static void OnKeyPressed(KeyPressEventHandler handler)
         {
-            if (handler != null)
-                handler();
+            handler?.Invoke();
         }
 
         /// <summary>
@@ -54,7 +50,7 @@ namespace MonoGameFirst.BaseGameClasses
         /// <param name="method">a void() method</param>
         public static void SubscribeToKeyPressEvent(Keys key, KeyPressEventHandler method)
         {
-            if(!KeypressHandlers.ContainsKey(key))
+            if (!KeypressHandlers.ContainsKey(key))
                 KeypressHandlers[key] = method;
             else
                 KeypressHandlers[key] += method;
@@ -70,6 +66,11 @@ namespace MonoGameFirst.BaseGameClasses
         {
             if (KeypressHandlers.ContainsKey(key))
                 KeypressHandlers[key] -= method;
+        }
+
+        public static bool IsKeyPressedOnce(Keys key)
+        {
+            return Curr.IsKeyDown(key) && !Prev.IsKeyDown(key);
         }
 
         #endregion
@@ -90,18 +91,16 @@ namespace MonoGameFirst.BaseGameClasses
         /// </summary>
         private static void ThreadMethod()
         {
-            KeyboardState state = Keyboard.GetState();
             while (true)
             {
-                state = Keyboard.GetState();
-
-                foreach (Keys key in KeypressHandlers.Keys)
+                Curr = Keyboard.GetState();
+                foreach (Keys key in KeypressHandlers.Keys.Where(key => Curr.IsKeyDown(key)))
                 {
-                    if (state.IsKeyDown(key))
-                        OnKeyPressed(KeypressHandlers[key]);
+                    OnKeyPressed(KeypressHandlers[key]);
                 }
 
-                Thread.Sleep(10);
+                Thread.Sleep(16);
+                Prev = Curr;
             }
         }
 

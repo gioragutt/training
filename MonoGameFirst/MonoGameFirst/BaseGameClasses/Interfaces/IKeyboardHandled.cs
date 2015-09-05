@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-/*
+﻿/*
     Note: When subscribing to keyboard presses,
     There is a difference when changing order of subscriptions
     F.E
@@ -15,7 +10,7 @@ using System.Text;
     and vice versa, first to 5 and later to 3, showing 3
 */
 
-namespace MonoGameFirst.BaseGameClasses
+namespace MonoGameFirst.BaseGameClasses.Interfaces
 {
     public interface IKeyboardHandled
     {

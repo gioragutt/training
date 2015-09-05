@@ -1,13 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGameFirst
+namespace MonoGameFirst.BaseGameClasses.Player_Classes
 {
     public class Sprite
     {
         #region Data Members
 
-        private Vector2 m_position;
+        private Vector2 position;
 
         #endregion
 
@@ -15,68 +15,42 @@ namespace MonoGameFirst
 
         public Vector2 Position
         {
-            get
-            {
-                return m_position;
-            }
-            set
-            {
-                m_position = value;
-            }
+            get { return position; }
+            set { position = value; }
         }
 
         public float X
         {
-            get
-            {
-                return m_position.X;
-            }
-            set
-            {
-                m_position.X = value;
-            }
+            get { return position.X; }
+            set { position.X = value; }
         }
 
         public float Y
         {
-            get
-            {
-                return m_position.Y;
-            }
-            set
-            {
-                m_position.Y = value;
-            }
+            get { return position.Y; }
+            set { position.Y = value; }
         }
 
-        public Texture2D Texture
-        {
-            get; set;
-        }
+        public Texture2D Texture { get; set; }
 
         public int Width
         {
-            get
-            {
-                return Texture.Width;
-            }
+            get { return Texture.Width; }
         }
 
         public int Height
         {
-            get
-            {
-                return Texture.Height;
-            }
+            get { return Texture.Height; }
         }
 
         #endregion
 
         #region Public Constructors
 
-        public Sprite(Texture2D texture, int x_pos, int y_pos) 
-            : this(texture, new Vector2((float)x_pos, (float)y_pos))
-        { }
+        public Sprite(Texture2D texture, int xPos, int yPos)
+            : this(texture, new Vector2((float) xPos, (float) yPos))
+        {
+        }
 
         public Sprite(Texture2D texture, Vector2 position)
         {

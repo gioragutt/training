@@ -14,11 +14,9 @@ namespace MonoGameFirst.BaseGameClasses
     {
         #region Properties
 
-        public static SpriteFont Font
-        { get; set; }
+        public static SpriteFont Font { get; set; }
 
-        public static Texture2D PlayerHealthTexture
-        { get; set; }
+        public static Texture2D PlayerHealthTexture { get; set; }
 
         public static event UIDrawEventHandler DrawingEvent;
 
@@ -49,10 +47,10 @@ namespace MonoGameFirst.BaseGameClasses
 
         public static void Draw(SpriteBatch spriteBatch)
         {
-            DrawingEvent(spriteBatch);
+            if (spriteBatch != null)
+                DrawingEvent?.Invoke(spriteBatch);
         }
 
         #endregion
-
     }
 }
