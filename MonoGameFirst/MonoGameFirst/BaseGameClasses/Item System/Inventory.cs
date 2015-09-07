@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGameFirst.BaseGameClasses.Interfaces;
 using MonoGameFirst.BaseGameClasses.Player_Classes;
+using MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace MonoGameFirst.BaseGameClasses.Item_System
@@ -22,8 +23,8 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
             {
                 PlayerStats stats = PlayerStats.Create();
                 foreach (var slot in Slots)
-                    if(slot.Value.Item != null)
-                        stats = stats + slot.Value.Item.Stats;
+                    if (slot.Value.Item != null)
+                        stats += slot.Value.Item.Stats;
                 return stats;
             }
         }
@@ -45,16 +46,17 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
 
         public void EquipItem(Item item)
         {
+            if (Slots[item.Type].Item == item) return;
             Slots[item.Type].SetItem(item);
+            Player.Stats += item.Stats;
         }
 
         public void UnequipItem(Item item)
         {
-            if (Slots.ContainsKey(item.Type) && Slots[item.Type].Item == item)
-            {
-                Slots[item.Type].UnsetItem();
-                Player.ValidateStats();
-            }
+            if (!Slots.ContainsKey(item.Type) || Slots[item.Type].Item != item) return;
+            Slots[item.Type].UnsetItem();
+            Player.Stats -= item.Stats;
+            Player.ValidateStats();
         }
 
         #endregion

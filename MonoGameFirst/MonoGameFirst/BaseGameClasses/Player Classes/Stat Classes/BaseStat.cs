@@ -1,0 +1,52 @@
+﻿namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
+{
+    public class BaseStat
+    {
+        #region Object Methods
+
+        protected bool Equals(BaseStat other)
+        {
+            return BaseValue.Equals(other.BaseValue) && BaseMultiplier.Equals(other.BaseMultiplier);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (ReferenceEquals(this, obj))
+                return true;
+            if (obj.GetType() != this.GetType())
+                return false;
+            return Equals((BaseStat)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (BaseValue.GetHashCode() * 397) ^ BaseMultiplier.GetHashCode();
+            }
+        }
+
+        #endregion
+
+        public float BaseValue { get; }
+        public float BaseMultiplier { get; }
+
+        public BaseStat(float baseValue, float baseMultiplier = 0)
+        {
+            BaseValue = baseValue;
+            BaseMultiplier = baseMultiplier;
+        }
+
+        public static bool operator==(BaseStat lhs, BaseStat rhs)
+        {
+            return lhs.Equals(rhs);
+        }
+
+        public static bool operator!=(BaseStat lhs, BaseStat rhs)
+        {
+            return !(lhs == rhs);
+        }
+    }
+}

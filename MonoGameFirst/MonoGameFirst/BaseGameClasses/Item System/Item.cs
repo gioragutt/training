@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MonoGameFirst.BaseGameClasses.Player_Classes;
+using MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes;
 
 namespace MonoGameFirst.BaseGameClasses.Item_System
 {
@@ -17,7 +18,8 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
         public override int Cost { get; protected set; }
         public override string Description { get; protected set; }
         public override PlayerStats Stats { get; protected set; }
-        public Weapon(string name, int cost, string description, PlayerStats playerStats) 
+
+        public Weapon(string name, int cost, string description, PlayerStats playerStats)
             : base(name, cost, description, playerStats) { }
     }
 
@@ -27,7 +29,8 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
         public override int Cost { get; protected set; }
         public override string Description { get; protected set; }
         public override PlayerStats Stats { get; protected set; }
-        public Consumable(string name, int cost, string description, PlayerStats playerStats) 
+
+        public Consumable(string name, int cost, string description, PlayerStats playerStats)
             : base(name, cost, description, playerStats) { }
     }
 
@@ -50,6 +53,7 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
         {
             get { return GetTypeOfItem(); }
         }
+
         private ItemType GetTypeOfItem()
         {
             if (this is Weapon)

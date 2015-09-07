@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameFirst.BaseGameClasses.Interfaces;
 using MonoGameFirst.BaseGameClasses.Item_System;
+using MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes;
 
 namespace MonoGameFirst.BaseGameClasses.Player_Classes
 {
@@ -28,37 +29,22 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         #region Properties
 
         public bool ShouldDraw { get; set; }
-
-        /// <summary>
-        /// Gets and sets the ID of the player (for future multiplayer needs)
-        /// </summary>
         public int ID { get; set; }
+        private bool IsSubscribedToKeyboardHandler { get; set; }
 
-        public bool IsSubscribedToKeyboardHandler { get; private set; }
-        
         #region Inventory and Stats Properties
 
-        public Inventory Inventory
-        { get; set; }
-
-        private PlayerStats BaseStats
-        { get; }
-
-        public PlayerStats Stats
-        {
-            get { return BaseStats + Inventory.Stats; }
-        }
-
+        public Inventory Inventory { get; set; }
+        public PlayerStats Stats { get; set; }
         public float PercentHealth
         {
-            get { return (Health > Stats.MaxHealth) ? 1f : (float)Health / Stats.MaxHealth; }
+            get { return (float)Health / Stats.MaxHealth; }
         }
-
         public int Health
         {
             get { return health; }
             set { health = value < 0 ? 0 : value > Stats.MaxHealth ? Stats.MaxHealth : value; }
-        } 
+        }
 
         #endregion
 
@@ -90,7 +76,7 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         public Player()
         {
             FrameCounter = 0;
-            BaseStats = PlayerStats.Create(maxHealth: 100, movespeed: 5);
+            Stats = PlayerStats.Create(maxhealth: 100, movespeed: 5);
             Inventory = new Inventory(this);
             Health = 50;
             ShouldDraw = true;
@@ -165,22 +151,22 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         private void MoveUpImpl()
         {
-            Sprite.Y -= BaseStats.MoveSpeed;
+            Sprite.Y -= Stats.MoveSpeed;
         }
 
         private void MoveDownImpl()
         {
-            Sprite.Y += BaseStats.MoveSpeed;
+            Sprite.Y += Stats.MoveSpeed;
         }
 
         private void MoveLeftImpl()
         {
-            Sprite.X -= BaseStats.MoveSpeed;
+            Sprite.X -= Stats.MoveSpeed;
         }
 
         private void MoveRightImpl()
         {
-            Sprite.X += BaseStats.MoveSpeed;
+            Sprite.X += Stats.MoveSpeed;
         }
 
         private void ChangeAnimToUp()
@@ -345,14 +331,18 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         {
             if (!ShouldDraw)
                 return;
-            Texture2D healthBarBackgroundTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
-            healthBarBackgroundTexture.SetData(new[] { Color.AntiqueWhite });
-            int startingWidth = spriteBatch.GraphicsDevice.Viewport.Width / 2 - 100;
-            string hpString = string.Format("HP:{0}", Health.ToString().PadLeft(4));
-            Vector2 hpFontSize = UI.Font.MeasureString(hpString);
-            spriteBatch.DrawString(UI.Font, hpString, new Vector2(startingWidth, 10f), Color.Black);
-            spriteBatch.Draw(healthBarBackgroundTexture,
-                new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10, 150, (int)hpFontSize.Y), Color.White);
+            int startingWidth;
+            Vector2 hpFontSize;
+            using (Texture2D healthBarBackgroundTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1))
+            {
+                healthBarBackgroundTexture.SetData(new[] { Color.AntiqueWhite });
+                startingWidth = spriteBatch.GraphicsDevice.Viewport.Width / 2 - 100;
+                string hpString = string.Format("HP:{0}", Health.ToString().PadLeft(4));
+                hpFontSize = UI.Font.MeasureString(hpString);
+                spriteBatch.DrawString(UI.Font, hpString, new Vector2(startingWidth, 10f), Color.Black);
+                spriteBatch.Draw(healthBarBackgroundTexture,
+                    new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10, 150, (int)hpFontSize.Y), Color.White);
+            }
             spriteBatch.Draw(UI.PlayerHealthTexture, new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10,
                 (int)(150f * PercentHealth), (int)hpFontSize.Y), Color.Red);
         }

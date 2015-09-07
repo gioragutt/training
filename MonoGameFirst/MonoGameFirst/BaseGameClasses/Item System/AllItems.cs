@@ -1,4 +1,5 @@
 ﻿using MonoGameFirst.BaseGameClasses.Player_Classes;
+using MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes;
 
 namespace MonoGameFirst.BaseGameClasses.Item_System
 {
@@ -14,7 +15,7 @@ namespace MonoGameFirst.BaseGameClasses.Item_System
                     name: "Test Weapon",
                     cost: 999,
                     description: "Just a test weapon",
-                    playerStats: PlayerStats.Create(maxHealth: 10, movespeed: 2));
+                    playerStats: PlayerStats.Create(maxhealth: 10, movespeed: 2));
 
             TestConsumable =
                 new Consumable(
