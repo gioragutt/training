@@ -50,6 +50,7 @@
     <Compile Include="BaseGameClasses\Player Classes\Stat Classes\PlayerStats.cs" />
     <Compile Include="BaseGameClasses\Player Classes\Stat Classes\RawAndFinalBonuses.cs" />
     <Compile Include="BaseGameClasses\Player Classes\Stat Classes\Stat.cs" />
+    <Compile Include="BaseGameClasses\Player Classes\Stat Classes\VariableStat.cs" />
     <Compile Include="BaseGameClasses\UI.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />

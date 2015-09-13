@@ -22,7 +22,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         #region Data Members
 
         private Vector2 currentFrame;
-        private int health;
 
         #endregion
 
@@ -36,14 +35,10 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         public Inventory Inventory { get; set; }
         public PlayerStats Stats { get; set; }
+
         public float PercentHealth
         {
-            get { return (float)Health / Stats.MaxHealth; }
-        }
-        public int Health
-        {
-            get { return health; }
-            set { health = value < 0 ? 0 : value > Stats.MaxHealth ? Stats.MaxHealth : value; }
+            get { return (float)Stats.Health / Stats.MaxHealth; }
         }
 
         #endregion
@@ -76,9 +71,8 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         public Player()
         {
             FrameCounter = 0;
-            Stats = PlayerStats.Create(maxhealth: 100, movespeed: 5);
+            Stats = PlayerStats.Create(maxhealth: 100, movespeed: 5, health: 50);
             Inventory = new Inventory(this);
-            Health = 50;
             ShouldDraw = true;
         }
 
@@ -193,7 +187,7 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         public void ValidateStats()
         {
-            Health = Health;
+            Stats.Health = Stats.Health;
         }
 
         #endregion
@@ -337,7 +331,7 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
             {
                 healthBarBackgroundTexture.SetData(new[] { Color.AntiqueWhite });
                 startingWidth = spriteBatch.GraphicsDevice.Viewport.Width / 2 - 100;
-                string hpString = string.Format("HP:{0}", Health.ToString().PadLeft(4));
+                string hpString = string.Format("HP:{0}", Stats.Health.ToString().PadLeft(4));
                 hpFontSize = UI.Font.MeasureString(hpString);
                 spriteBatch.DrawString(UI.Font, hpString, new Vector2(startingWidth, 10f), Color.Black);
                 spriteBatch.Draw(healthBarBackgroundTexture,

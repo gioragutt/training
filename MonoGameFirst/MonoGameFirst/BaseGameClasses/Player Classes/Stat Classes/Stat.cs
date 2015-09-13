@@ -5,13 +5,19 @@ using System.Text;
 
 namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
 {
-    public class StatAsInt : Stat
+    public class BooleanStat : BaseStat
     {
-        public StatAsInt(int baseValue) : base(baseValue) { }
-        public new int FinalValue => (int)base.FinalValue;
+        public bool Value { get; set; }
+
+        public BooleanStat(bool baseValue) : base(0)
+        {
+            Value = baseValue;
+        }
     }
+
     public class Stat : BaseStat
     {
+        private bool WasChanged { get; set; }
         private float finalValue;
         private List<RawBonus> RawBonuses { get; set; }
         private List<FinalBonus> FinalBonuses { get; set; }
@@ -23,6 +29,8 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
         {
             RawBonuses = new List<RawBonus>();
             FinalBonuses = new List<FinalBonus>();
+            finalValue = baseValue;
+            WasChanged = false;
         }
 
         #region Addition And Removal of Bonuses Methods
@@ -30,21 +38,25 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
         public void AddRawBonus(RawBonus bonus)
         {
             RawBonuses.Add(bonus);
+            WasChanged = true;
         }
 
         public void AddFinalBonus(FinalBonus bonus)
         {
             FinalBonuses.Add(bonus);
+            WasChanged = true;
         }
 
         public void RemoveRawBonus(RawBonus bonus)
         {
             RawBonuses.Remove(bonus);
+            WasChanged = true;
         }
 
         public void RemoveFinalBonus(FinalBonus bonus)
         {
             FinalBonuses.Remove(bonus);
+            WasChanged = true;
         }
 
         #endregion
@@ -53,9 +65,11 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
 
         private float CalculateFinalValue()
         {
+            if (!WasChanged) return finalValue;
             finalValue = BaseValue;
             ApplyRawBonuses();
             ApplyFinalBonuses();
+            WasChanged = false;
             return finalValue;
         }
 
@@ -85,6 +99,17 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
 
             finalValue += rawBonusValue;
             finalValue *= (1 + rawBonusMultipier);
+        }
+
+        #endregion
+
+        #region AsInt
+
+        public class AsInt : Stat
+        {
+            public AsInt(int baseValue) : base(baseValue)
+            { }
+            public new int FinalValue => (int)base.FinalValue;
         }
 
         #endregion

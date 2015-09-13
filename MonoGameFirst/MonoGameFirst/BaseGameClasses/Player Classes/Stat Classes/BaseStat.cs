@@ -4,6 +4,11 @@
     {
         #region Object Methods
 
+        protected static bool IsNull(object obj)
+        {
+            return ReferenceEquals(obj, null);
+        }
+
         protected bool Equals(BaseStat other)
         {
             return BaseValue.Equals(other.BaseValue) && BaseMultiplier.Equals(other.BaseMultiplier);
@@ -41,6 +46,8 @@
 
         public static bool operator==(BaseStat lhs, BaseStat rhs)
         {
+            if (IsNull(lhs))
+                return false;
             return lhs.Equals(rhs);
         }
 
