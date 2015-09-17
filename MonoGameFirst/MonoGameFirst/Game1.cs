@@ -95,12 +95,6 @@ namespace MonoGameFirst
 
             Player.Update(gameTime);
 
-            if (currState.IsKeyDown(Keys.Add))
-                ++Player.Stats.Health;
-
-            if (currState.IsKeyDown(Keys.Subtract))
-                --Player.Stats.Health;
-
             if (currState.IsKeyDown(Keys.Space) && !prevState.IsKeyDown(Keys.Space))
                 Player.ToggleSubscriptionToKeyboardHandler();
 

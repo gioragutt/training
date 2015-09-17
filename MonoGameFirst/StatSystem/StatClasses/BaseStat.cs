@@ -1,10 +1,10 @@
-﻿namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
+﻿namespace StatSystem.StatClasses
 {
     public class BaseStat
     {
         #region Object Methods
 
-        protected static bool IsNull(object obj)
+        protected static bool IsNull(BaseStat obj)
         {
             return ReferenceEquals(obj, null);
         }

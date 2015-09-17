@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
+﻿namespace StatSystem.StatClasses
 {
     public class RawBonus : BaseStat
     {

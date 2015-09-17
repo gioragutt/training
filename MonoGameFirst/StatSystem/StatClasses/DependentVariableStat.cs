@@ -1,37 +1,5 @@
-﻿namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
+﻿namespace StatSystem.StatClasses
 {
-    public class VariableStat : BaseStat
-    {
-        protected float valueOfStat;
-
-        public float Value
-        {
-            get { return valueOfStat; }
-            set { this.valueOfStat = value; }
-        }
-
-        public VariableStat(float baseValue)
-            : base(baseValue)
-        {
-            Value = BaseValue;
-        }
-
-        #region AsInt
-
-        public class AsInt : VariableStat
-        {
-            public new int Value
-            {
-                get { return (int)valueOfStat; }
-                set { valueOfStat = (float)value; }
-            }
-
-            public AsInt(int baseValue) : base(baseValue) { }
-        }
-
-        #endregion
-    }
-
     public class DependentVariableStat : VariableStat
     {
         protected readonly Stat dependency;
@@ -58,11 +26,7 @@
 
         private float DefaultSetMethod(float value)
         {
-            /* ===================================================  *\
-           ||   Must cast to object to have == null return true,     ||
-           ||   Because it conflicts with the overloaded operator==  ||
-            \* ===================================================  */
-            if ((object)dependency == null)
+            if (BaseStat.IsNull(dependency))
                 return valueOfStat;
             float maxVal = dependency.FinalValue;
             return value < 0 ? 0 : value > maxVal ? maxVal : value;

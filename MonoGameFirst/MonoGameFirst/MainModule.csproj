@@ -37,20 +37,27 @@
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <OutputPath>bin\Release\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BaseGameClasses\Item System\AllItems.cs" />
     <Compile Include="BaseGameClasses\Interfaces\IKeyboardHandled.cs" />
     <Compile Include="BaseGameClasses\Interfaces\IDrawsOnUI.cs" />
-    <Compile Include="BaseGameClasses\Player Classes\Stat Classes\BaseStat.cs" />
-    <Compile Include="BaseGameClasses\Item System\Inventory.cs" />
-    <Compile Include="BaseGameClasses\Item System\Item.cs" />
-    <Compile Include="BaseGameClasses\Item System\Slot.cs" />
     <Compile Include="BaseGameClasses\KeyboardHandler.cs" />
     <Compile Include="BaseGameClasses\Player Classes\Player.cs" />
-    <Compile Include="BaseGameClasses\Player Classes\Stat Classes\PlayerStats.cs" />
-    <Compile Include="BaseGameClasses\Player Classes\Stat Classes\RawAndFinalBonuses.cs" />
-    <Compile Include="BaseGameClasses\Player Classes\Stat Classes\Stat.cs" />
-    <Compile Include="BaseGameClasses\Player Classes\Stat Classes\VariableStat.cs" />
     <Compile Include="BaseGameClasses\UI.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />

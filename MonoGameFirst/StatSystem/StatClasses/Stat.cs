@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
+namespace StatSystem.StatClasses
 {
-    public class BooleanStat : BaseStat
-    {
-        public bool Value { get; set; }
-
-        public BooleanStat(bool baseValue) : base(0)
-        {
-            Value = baseValue;
-        }
-    }
-
     public class Stat : BaseStat
     {
         private bool WasChanged { get; set; }
@@ -107,8 +94,7 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes
 
         public class AsInt : Stat
         {
-            public AsInt(int baseValue) : base(baseValue)
-            { }
+            public AsInt(int baseValue) : base(baseValue) { }
             public new int FinalValue => (int)base.FinalValue;
         }
 

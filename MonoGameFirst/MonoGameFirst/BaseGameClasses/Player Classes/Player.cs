@@ -4,12 +4,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGameFirst.BaseGameClasses.Interfaces;
-using MonoGameFirst.BaseGameClasses.Item_System;
-using MonoGameFirst.BaseGameClasses.Player_Classes.Stat_Classes;
 
 namespace MonoGameFirst.BaseGameClasses.Player_Classes
 {
-    internal enum Direction
+    public enum Direction
     {
         Up,
         Right,
@@ -30,18 +28,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         public bool ShouldDraw { get; set; }
         public int ID { get; set; }
         private bool IsSubscribedToKeyboardHandler { get; set; }
-
-        #region Inventory and Stats Properties
-
-        public Inventory Inventory { get; set; }
-        public PlayerStats Stats { get; set; }
-
-        public float PercentHealth
-        {
-            get { return (float)Stats.Health / Stats.MaxHealth; }
-        }
-
-        #endregion
 
         #region Animation Related Properties
 
@@ -71,8 +57,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         public Player()
         {
             FrameCounter = 0;
-            Stats = PlayerStats.Create(maxhealth: 100, movespeed: 5, health: 50);
-            Inventory = new Inventory(this);
             ShouldDraw = true;
         }
 
@@ -145,22 +129,18 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         private void MoveUpImpl()
         {
-            Sprite.Y -= Stats.MoveSpeed;
         }
 
         private void MoveDownImpl()
         {
-            Sprite.Y += Stats.MoveSpeed;
         }
 
         private void MoveLeftImpl()
         {
-            Sprite.X -= Stats.MoveSpeed;
         }
 
         private void MoveRightImpl()
         {
-            Sprite.X += Stats.MoveSpeed;
         }
 
         private void ChangeAnimToUp()
@@ -184,11 +164,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         }
 
         #endregion
-
-        public void ValidateStats()
-        {
-            Stats.Health = Stats.Health;
-        }
 
         #endregion
 
@@ -281,7 +256,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         {
             UI.SubscribeToUIDraw(UIDraw);
             SubscribeToKeyboardHandler();
-            Inventory.Initialize();
         }
 
         public void LoadContent(ContentManager manager, int startingXPos, int startingYPos)
@@ -313,7 +287,6 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
         public void Update(GameTime gameTime)
         {
             UpdateAnimation(gameTime);
-            Inventory.Update();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -323,22 +296,22 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
 
         public void UIDraw(SpriteBatch spriteBatch)
         {
-            if (!ShouldDraw)
-                return;
-            int startingWidth;
-            Vector2 hpFontSize;
-            using (Texture2D healthBarBackgroundTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1))
-            {
-                healthBarBackgroundTexture.SetData(new[] { Color.AntiqueWhite });
-                startingWidth = spriteBatch.GraphicsDevice.Viewport.Width / 2 - 100;
-                string hpString = string.Format("HP:{0}", Stats.Health.ToString().PadLeft(4));
-                hpFontSize = UI.Font.MeasureString(hpString);
-                spriteBatch.DrawString(UI.Font, hpString, new Vector2(startingWidth, 10f), Color.Black);
-                spriteBatch.Draw(healthBarBackgroundTexture,
-                    new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10, 150, (int)hpFontSize.Y), Color.White);
-            }
-            spriteBatch.Draw(UI.PlayerHealthTexture, new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10,
-                (int)(150f * PercentHealth), (int)hpFontSize.Y), Color.Red);
+            //if (!ShouldDraw)
+            //    return;
+            //int startingWidth;
+            //Vector2 hpFontSize;
+            //using (Texture2D healthBarBackgroundTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1))
+            //{
+            //    healthBarBackgroundTexture.SetData(new[] { Color.AntiqueWhite });
+            //    startingWidth = spriteBatch.GraphicsDevice.Viewport.Width / 2 - 100;
+            //    string hpString = string.Format("HP:{0}", Stats.Health.ToString().PadLeft(4));
+            //    hpFontSize = UI.Font.MeasureString(hpString);
+            //    spriteBatch.DrawString(UI.Font, hpString, new Vector2(startingWidth, 10f), Color.Black);
+            //    spriteBatch.Draw(healthBarBackgroundTexture,
+            //        new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10, 150, (int)hpFontSize.Y), Color.White);
+            //}
+            //spriteBatch.Draw(UI.PlayerHealthTexture, new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10,
+            //    (int)(150f * PercentHealth), (int)hpFontSize.Y), Color.Red);
         }
 
         #endregion

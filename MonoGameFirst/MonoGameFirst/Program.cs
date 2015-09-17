@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace MonoGameFirst
 {
-#if WINDOWS || LINUX
     /// <summary>
     /// The main class.
     /// </summary>
@@ -19,5 +17,4 @@ namespace MonoGameFirst
                 game.Run();
         }
     }
-#endif
 }
