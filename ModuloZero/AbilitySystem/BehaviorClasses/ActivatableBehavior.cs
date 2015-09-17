@@ -4,9 +4,9 @@
     {
         public abstract bool BehaviorImplentation(IUnit destinationPlayer);
 
-        public bool ApplyBehavior(IUnit unit)
+        public void ApplyBehavior(IUnit unit)
         {
-            return BehaviorImplentation(unit);
+            BehaviorImplentation(unit);
         }
     }
 }

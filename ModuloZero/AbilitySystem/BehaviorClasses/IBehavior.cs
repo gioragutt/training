@@ -1,6 +1,4 @@
-﻿using MonoGameFirst.BaseGameClasses.Player_Classes;
-
-namespace AbilitySystem.BehaviorClasses
+﻿namespace AbilitySystem.BehaviorClasses
 {
     /// <summary>
     /// Interface for any effect that affects a player
@@ -12,11 +10,6 @@ namespace AbilitySystem.BehaviorClasses
         /// </summary>
         /// <param name="unit"></param>
         /// <returns>true if affection is successful; otherwise false</returns>
-        bool ApplyBehavior(IUnit unit);
+        void ApplyBehavior(IUnit unit);
     }
-
-    /*
-    TODO:
-    IBehavior -> ActivatableBehavior, TimedBehavior, TogglableAffect, PersistantEffect 
-    */
 }
