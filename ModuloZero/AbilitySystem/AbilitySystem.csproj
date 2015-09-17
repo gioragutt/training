@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.4.0.456, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,15 +45,9 @@
     <Compile Include="BehaviorClasses\DurationBehavior.cs" />
     <Compile Include="BehaviorClasses\IBehavior.cs" />
     <Compile Include="BehaviorClasses\LimitedTimedBehavior.cs" />
-    <Compile Include="BehaviorClasses\TickBasedTimedBehavior.cs" />
+    <Compile Include="BehaviorClasses\TickBasedBehavior.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MainModule\MainModule.csproj">
-      <Project>{541DD0A0-F31A-41B9-A8FF-8CDDAEB51613}</Project>
-      <Name>MainModule</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

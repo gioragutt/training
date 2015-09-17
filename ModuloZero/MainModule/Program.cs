@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonoGameFirst
+namespace ModuloZero
 {
     /// <summary>
     /// The main class.

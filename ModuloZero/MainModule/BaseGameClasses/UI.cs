@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGameFirst.BaseGameClasses
+namespace ModuloZero.BaseGameClasses
 {
     public delegate void UIDrawEventHandler(SpriteBatch spriteBatch);
 
     public static class UI
     {
+        public static Texture2D GetNewColorTexture(Color color, GraphicsDevice graphicsDevice)
+        {
+            Texture2D tex = new Texture2D(graphicsDevice, 1, 1);
+            tex.SetData<Color>(new Color[] { color });
+            return tex;
+        }
+
         #region Properties
 
         public static SpriteFont Font { get; set; }
@@ -36,8 +39,7 @@ namespace MonoGameFirst.BaseGameClasses
 
         public static void Initialize(GraphicsDevice graphicsDevice)
         {
-            PlayerHealthTexture = new Texture2D(graphicsDevice, 1, 1);
-            PlayerHealthTexture.SetData<Color>(new Color[] { Color.Red });
+
         }
 
         public static void LoadContent(ContentManager manager)

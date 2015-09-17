@@ -1,29 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using System.Threading;
 
 namespace AbilitySystem.BehaviorClasses
 {
-    public class DummyPerTickBehavior : TickBasedTimedBehavior
-    {
-        public int DummyInt { get; private set; }
-
-        public DummyPerTickBehavior(long durationOfBehavior, long timeBetweenTicks, int dummyInt)
-            : base(durationOfBehavior, timeBetweenTicks)
-        {
-            DummyInt = dummyInt;
-        }
-
-        protected override void ApplyTick(IUnit unit)
-        {
-            DummyInt += 5;
-        }
-    }
-
-    public abstract class TickBasedTimedBehavior : LimitedTimeBehavior
+    public abstract class TickBasedBehavior : LimitedTimeBehavior
     {
         public long TickTime { get; }
         protected abstract void ApplyTick(IUnit unit);
@@ -33,7 +12,7 @@ namespace AbilitySystem.BehaviorClasses
         /// </summary>
         /// <param name="durationOfBehavior">Total duration of the behavior</param>
         /// <param name="timeBetweenTicks">Time between each tick occurs</param>
-        protected TickBasedTimedBehavior(long durationOfBehavior, long timeBetweenTicks)
+        protected TickBasedBehavior(long durationOfBehavior, long timeBetweenTicks)
             : base(durationOfBehavior)
         {
             TickTime = timeBetweenTicks;

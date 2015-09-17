@@ -1,30 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
+﻿using System.Threading;
 
 namespace AbilitySystem.BehaviorClasses
 {
-    public class DummyDurationBehavior : DurationBehavior
-    {
-        public int DummyInt { get; private set; }
-
-        public DummyDurationBehavior(long durationOfBehavior, int dummyInt) 
-            : base(durationOfBehavior)
-        {
-            DummyInt = dummyInt;
-        }
-        protected override void Activate(IUnit unit)
-        {
-            DummyInt += 5;
-        }
-
-        protected override void Deactivate(IUnit unit)
-        {
-            DummyInt -= 5;
-        }
-    }
-
     public abstract class DurationBehavior : LimitedTimeBehavior
     {
         protected abstract void Activate(IUnit unit);
@@ -55,7 +32,7 @@ namespace AbilitySystem.BehaviorClasses
             Timer.Start();
             Activate(unit);
             while (Timer.Elapsed.TotalMilliseconds < Duration) { }
-            Timer.Stop();
+            Timer.Reset();
             Deactivate(unit);
             IsActivated = false;
         }

@@ -1,10 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AbilitySystem;
+using AbilitySystem.BehaviorClasses;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ModuloZero.BaseGameClasses;
+using ModuloZero.BaseGameClasses.Player_Classes;
 using MonoGameFirst.BaseGameClasses;
-using MonoGameFirst.BaseGameClasses.Player_Classes;
 
-namespace MonoGameFirst
+namespace ModuloZero
 {
     public class MainGame : Game
     {
