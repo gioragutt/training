@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainModule", "MonoGameFirst\MainModule.csproj", "{541DD0A0-F31A-41B9-A8FF-8CDDAEB51613}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainModule", "MainModule\MainModule.csproj", "{541DD0A0-F31A-41B9-A8FF-8CDDAEB51613}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemSystem", "ItemSystem\ItemSystem.csproj", "{5E2F15D4-43AD-41F3-85BA-7955CE8EA131}"
 EndProject
