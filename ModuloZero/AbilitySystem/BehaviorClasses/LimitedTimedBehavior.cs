@@ -1,16 +1,16 @@
-﻿using System.Diagnostics;
+﻿using System;
 
 namespace AbilitySystem.BehaviorClasses
 {
     public abstract class LimitedTimeBehavior : IBehavior
     {
-        public Stopwatch Timer { get; }
         public abstract void ApplyBehavior(IUnit unit);
-        public long Duration { get; }
+        public abstract bool CanApplyBehaviorTo(IUnit unit);
 
-        protected LimitedTimeBehavior(long durationOfBehavior)
+        public TimeSpan Duration { get; }
+
+        protected LimitedTimeBehavior(TimeSpan durationOfBehavior)
         {
-            Timer = new Stopwatch();
             Duration = durationOfBehavior;
         }
     }

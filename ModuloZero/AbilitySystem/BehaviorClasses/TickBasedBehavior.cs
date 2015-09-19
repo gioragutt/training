@@ -1,18 +1,22 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AbilitySystem.BehaviorClasses
 {
     public abstract class TickBasedBehavior : LimitedTimeBehavior
     {
-        public long TickTime { get; }
         protected abstract void ApplyTick(IUnit unit);
+        public abstract override bool CanApplyBehaviorTo(IUnit unit);
+
+        public TimeSpan TickTime { get; }
 
         /// <summary>
         /// Initialize profile of the tick-based behavior
         /// </summary>
         /// <param name="durationOfBehavior">Total duration of the behavior</param>
         /// <param name="timeBetweenTicks">Time between each tick occurs</param>
-        protected TickBasedBehavior(long durationOfBehavior, long timeBetweenTicks)
+        protected TickBasedBehavior(TimeSpan durationOfBehavior, TimeSpan timeBetweenTicks)
             : base(durationOfBehavior)
         {
             TickTime = timeBetweenTicks;
@@ -20,21 +24,19 @@ namespace AbilitySystem.BehaviorClasses
 
         public override void ApplyBehavior(IUnit unit)
         {
+            if (!CanApplyBehaviorTo(unit)) return;
             Thread trd = new Thread(() => ThreadMethod(unit));
             trd.Start();
         }
 
         private void ThreadMethod(IUnit unit)
         {
-            Timer.Start();
-
-            while (Timer.ElapsedMilliseconds < Duration)
+            TimeSpan totalTime = TimeSpan.Zero;
+            while (totalTime.CompareTo(Duration) < 0)
             {
-                if (Timer.Elapsed.TotalMilliseconds % TickTime == 0)
-                    ApplyTick(unit);
+                Task.Delay(TickTime).ContinueWith(_ => ApplyTick(unit));
+                totalTime += TickTime;
             }
-
-            Timer.Stop();
         }
     }
 }

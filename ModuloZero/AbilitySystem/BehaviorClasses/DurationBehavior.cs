@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AbilitySystem.BehaviorClasses
 {
@@ -6,14 +8,15 @@ namespace AbilitySystem.BehaviorClasses
     {
         protected abstract void Activate(IUnit unit);
         protected abstract void Deactivate(IUnit unit);
+        public override abstract bool CanApplyBehaviorTo(IUnit unit);
 
         private bool IsActivated { get; set; }
 
         /// <summary>
         /// Initialize profile of behavior
         /// </summary>
-        /// <param name="durationOfBehavior">Duration of the behavior in milliseconds</param>
-        protected DurationBehavior(long durationOfBehavior)
+        /// <param name="durationOfBehavior">Duration of the behavior</param>
+        protected DurationBehavior(TimeSpan durationOfBehavior)
             : base(durationOfBehavior)
         {
             IsActivated = false;
@@ -21,19 +24,17 @@ namespace AbilitySystem.BehaviorClasses
 
         public override void ApplyBehavior(IUnit unit)
         {
+            if (!CanApplyBehaviorTo(unit)) return;
             if (IsActivated) return;
-            Thread trd = new Thread(() => ThreadMethod(unit));
+            Thread trd = new Thread(_ => ThreadMethod(unit));
             trd.Start();
-            IsActivated = true;
         }
 
         private void ThreadMethod(IUnit unit)
         {
-            Timer.Start();
+            IsActivated = true;
             Activate(unit);
-            while (Timer.Elapsed.TotalMilliseconds < Duration) { }
-            Timer.Reset();
-            Deactivate(unit);
+            Task.Delay(Duration).ContinueWith(_ => Deactivate(unit));
             IsActivated = false;
         }
     }
