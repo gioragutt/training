@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading;
 using AbilitySystem;
 using AbilitySystem.AbilityClasses;
 using AbilitySystem.BehaviorClasses;
@@ -12,9 +11,6 @@ using UISystem;
 
 namespace ItemSystem.ItemClasses
 {
-    /// <summary>
-    /// Abstract class for any item
-    /// </summary>
     public class Item
     {
         #region Properties
@@ -55,7 +51,7 @@ namespace ItemSystem.ItemClasses
 
         #region Ctor
 
-        public Item(int id, string name, int price, ItemType type, string baseDescription, Ability ability)
+        private Item(int id, string name, int price, ItemType type, string baseDescription, Ability ability)
         {
             ID = id;
             Name = name;
@@ -69,9 +65,14 @@ namespace ItemSystem.ItemClasses
 
         #region Methods
 
+        public static Item Create(int id, string name, int price, ItemType type, string description, Ability ability)
+        {
+            return new Item(id, name, price, type, description, ability);
+        }
+
         public void Activate(IUnit unit)
         {
-            if (Ability.IsActivatable)
+            if (Ability != null && Ability.IsActivatable)
                 Ability.ActivateAbility(unit);
         }
 
@@ -80,8 +81,8 @@ namespace ItemSystem.ItemClasses
 
     public class TestItem
     {
-        public ItemSystem.ItemClasses.Item Item1 { get; }
-        public ItemSystem.ItemClasses.Item Item2 { get; }
+        public Item Item1 { get; }
+        public Item Item2 { get; }
 
         /// <summary>
         /// Example of a behavior that can take a parameter with which it will apply the behavior
@@ -148,34 +149,41 @@ namespace ItemSystem.ItemClasses
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public TestItem()
         {
-            Item1 = new Item(id: 0,
+            Item1 = Item.Create
+            (
+                id: 0,
                 name: "Test Item",
                 price: 30,
                 type: ItemType.Weapon,
-                baseDescription: "Just a test item",
-                ability: new Ability(effect: new BehaviorApplyingEffect(new ItemBehavior()),
-                    isActivatable: true,
+                description: "Just a test item",
+                ability: Ability.CreateActivatable
+                (
+                    effect: new BehaviorApplyingEffect(new ItemBehavior()),
                     name: "Test ability",
                     isUnique: false,
                     description: "Just a test ability",
-                    cooldown: TimeSpan.FromSeconds(3)));
+                    cooldown: TimeSpan.FromSeconds(3)
+                )
+            );
 
-            Item2 = new Item(id: 1,
+            Item2 = Item.Create
+            (
+                id: 1,
                 name: "Second Test Item",
                 price: 50,
                 type: ItemType.Armor,
-                baseDescription: "Just another test item",
-                ability: new Ability(effect: new BehaviorApplyingEffect(new DealDamageBehavior(5)),
-                    isActivatable: true,
+                description: "Just another test item",
+                ability: Ability.CreateActivatable
+                (
+                    effect: new BehaviorApplyingEffect(new DealDamageBehavior(5)),
                     name: "Test ability that deals 5 damage",
                     isUnique: false,
                     description: "Just a test ability that deals 5 damage",
-                    cooldown: TimeSpan.FromSeconds(3)));
+                    cooldown: TimeSpan.FromSeconds(3)
+                )
+            );
 
         }
     }

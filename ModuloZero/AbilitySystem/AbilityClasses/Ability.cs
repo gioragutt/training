@@ -54,7 +54,18 @@ namespace AbilitySystem.AbilityClasses
 
         #region Ctor
 
-        public Ability(IEffect effect, bool isActivatable, string name, bool isUnique, string description,
+        public static Ability CreateActivatable(IEffect effect, string name, bool isUnique, string description,
+                                         TimeSpan cooldown)
+        {
+            return new Ability(effect, true, name, isUnique, description, cooldown);
+        }
+
+        public static Ability CreateNotActivatable(IEffect effect, string name, bool isUnique, string description)
+        {
+            return new Ability(effect, false, name, isUnique, description);
+        }
+
+        private Ability(IEffect effect, bool isActivatable, string name, bool isUnique, string description,
                        TimeSpan? cooldown = null)
         {
             Effect = effect;

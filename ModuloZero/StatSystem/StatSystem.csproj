@@ -47,6 +47,12 @@
     <Compile Include="StatClasses\Stat.cs" />
     <Compile Include="StatClasses\VariableStat.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ItemSystem\ItemSystem.csproj">
+      <Project>{5E2F15D4-43AD-41F3-85BA-7955CE8EA131}</Project>
+      <Name>ItemSystem</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
