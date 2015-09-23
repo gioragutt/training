@@ -1,51 +1,40 @@
-﻿namespace StatSystem.StatClasses
+﻿using System;
+
+namespace StatSystem.StatClasses
 {
     public class DependentVariableStat : VariableStat
     {
         protected readonly Stat dependency;
+        private readonly Func<float, float, float> dependencyMethod;
 
-        public new float Value
-        {
-            get { return valueOfStat; }
-            set { this.valueOfStat = SetMethod(value); }
-        }
-
-        public DependentVariableStat(float baseValue, Stat dependentStat)
+        public DependentVariableStat(float baseValue, Stat dependentStat, Func<float, float, float> dependencyAppliance = null)
             : base(baseValue)
         {
-            Value = BaseValue;
             dependency = dependentStat;
+            dependencyMethod = dependencyAppliance;
         }
 
         #region Set Method
 
-        private float SetMethod(float value)
+        public override void AddRawBonus(RawBonus bonus)
         {
-            return DefaultSetMethod(value);
+            base.AddRawBonus(bonus);
+            ApplyDependency();
         }
 
-        private float DefaultSetMethod(float value)
+        public override void RemoveRawBonus(RawBonus bonus)
         {
-            if (BaseStat.IsNull(dependency))
-                return valueOfStat;
-            float maxVal = dependency.FinalValue;
-            return value < 0 ? 0 : value > maxVal ? maxVal : value;
+            base.RemoveRawBonus(bonus);
+            ApplyDependency();
         }
 
-        #endregion
-
-        #region AsInt
-
-        public new class AsInt : DependentVariableStat
+        public void ApplyDependency()
         {
-            public new int Value
-            {
-                get { return (int)valueOfStat; }
-                set { valueOfStat = SetMethod(value); }
-            }
-
-            public AsInt(int baseValue, Stat dependentStat)
-                : base(baseValue, dependentStat) { }
+            float valueOfDepedency = dependency.FinalValue;
+            if (dependencyMethod != null)
+                BaseValue = dependencyMethod(BaseValue, valueOfDepedency);
+            else
+                BaseValue = BaseValue < 0 ? 0 : BaseValue > valueOfDepedency ? valueOfDepedency : BaseValue;
         }
 
         #endregion

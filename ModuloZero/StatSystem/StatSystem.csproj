@@ -43,7 +43,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StatClasses\BaseStat.cs" />
     <Compile Include="StatClasses\Bonuses.cs" />
-    <Compile Include="StatClasses\BooleanStat.cs" />
     <Compile Include="StatClasses\DependentVariableStat.cs" />
     <Compile Include="StatClasses\Stat.cs" />
     <Compile Include="StatClasses\VariableStat.cs" />

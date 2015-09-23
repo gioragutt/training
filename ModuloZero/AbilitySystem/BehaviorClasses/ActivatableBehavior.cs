@@ -2,7 +2,7 @@
 {
     public abstract class ActivatableBehavior : IBehavior
     {
-        public abstract bool BehaviorImplementation(IUnit destinationPlayer);
+        protected abstract void BehaviorImplementation(IUnit destinationPlayer);
         public abstract bool CanApplyBehaviorTo(IUnit unit);
 
         public void ApplyBehavior(IUnit unit)

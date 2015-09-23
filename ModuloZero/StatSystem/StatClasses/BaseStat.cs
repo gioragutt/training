@@ -35,8 +35,8 @@
 
         #endregion
 
-        public float BaseValue { get; }
-        public float BaseMultiplier { get; }
+        public float BaseValue { get; protected set; }
+        public float BaseMultiplier { get; protected set; }
 
         public BaseStat(float baseValue, float baseMultiplier = 0)
         {

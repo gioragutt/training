@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework.Input;
 using System.Threading;
+using Microsoft.Xna.Framework.Input;
 
-namespace MonoGameFirst.BaseGameClasses
+namespace ModuloZero.BaseGameClasses
 {
     public delegate void KeyPressEventHandler();
 

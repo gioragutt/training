@@ -1,17 +1,24 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using System.Security.AccessControl;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ModuloZero.BaseGameClasses
+namespace UISystem
 {
     public delegate void UIDrawEventHandler(SpriteBatch spriteBatch);
 
     public static class UI
     {
-        public static Texture2D GetNewColorTexture(Color color, GraphicsDevice graphicsDevice)
+        private static Dictionary<Color, Texture2D> ColorTextureRepository { get; set; } 
+
+        public static Texture2D GetColorTexture(Color color, GraphicsDevice graphicsDevice)
         {
+            if (ColorTextureRepository.ContainsKey(color))
+                return ColorTextureRepository[color];
             Texture2D tex = new Texture2D(graphicsDevice, 1, 1);
             tex.SetData<Color>(new Color[] { color });
+            ColorTextureRepository[color] = tex;
             return tex;
         }
 
@@ -39,7 +46,7 @@ namespace ModuloZero.BaseGameClasses
 
         public static void Initialize(GraphicsDevice graphicsDevice)
         {
-
+            ColorTextureRepository = new Dictionary<Color, Texture2D>();
         }
 
         public static void LoadContent(ContentManager manager)

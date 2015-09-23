@@ -1,32 +1,39 @@
 ﻿namespace StatSystem.StatClasses
 {
-    public class VariableStat : BaseStat
+    public class VariableStat : Stat
     {
-        protected float valueOfStat;
-
-        public float Value
+        public override float FinalValue
         {
-            get { return valueOfStat; }
-            set { this.valueOfStat = value; }
+            get { return BaseValue; }
         }
 
         public VariableStat(float baseValue)
-            : base(baseValue)
+            : base(baseValue) { }
+
+        public override void AddRawBonus(RawBonus bonus)
         {
-            Value = BaseValue;
+            BaseValue += bonus.BaseValue;
+            if (BaseValue < 0)
+                BaseValue = 0;
+        }
+
+        public override void RemoveRawBonus(RawBonus bonus)
+        {
+            BaseValue -= bonus.BaseValue;
+            if (BaseValue < 0)
+                BaseValue = 0;
         }
 
         #region AsInt
 
-        public class AsInt : VariableStat
+        public new class AsInt : VariableStat
         {
-            public new int Value
-            {
-                get { return (int)valueOfStat; }
-                set { valueOfStat = (float)value; }
-            }
-
             public AsInt(int baseValue) : base(baseValue) { }
+
+            public override float FinalValue
+            {
+                get { return (int)base.FinalValue; }
+            }
         }
 
         #endregion

@@ -41,11 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbilityClasses\Ability.cs" />
     <Compile Include="BehaviorClasses\ActivatableBehavior.cs" />
     <Compile Include="BehaviorClasses\DurationBehavior.cs" />
     <Compile Include="BehaviorClasses\IBehavior.cs" />
     <Compile Include="BehaviorClasses\LimitedTimedBehavior.cs" />
     <Compile Include="BehaviorClasses\TickBasedBehavior.cs" />
+    <Compile Include="BehaviorClasses\TogglableBehavior.cs" />
+    <Compile Include="EffectClasses\BehaviorApplyingEffect.cs" />
+    <Compile Include="EffectClasses\EffectSet.cs" />
+    <Compile Include="EffectClasses\IEffect.cs" />
+    <Compile Include="EffectClasses\ModifyUnitEffect.cs" />
     <Compile Include="IUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 ﻿namespace AbilitySystem
 {
+
     public interface IUnit
     {
         /*

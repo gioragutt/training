@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbilitySystem", "AbilitySys
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatSystem", "StatSystem\StatSystem.csproj", "{4249349D-A951-4751-9940-5F4616EB456A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UISystem", "UISystem\UISystem.csproj", "{4E22E676-6D68-4768-B880-BEEB34F0CA4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,14 @@ Global
 		{4249349D-A951-4751-9940-5F4616EB456A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4249349D-A951-4751-9940-5F4616EB456A}.Release|x86.ActiveCfg = Release|Any CPU
 		{4249349D-A951-4751-9940-5F4616EB456A}.Release|x86.Build.0 = Release|Any CPU
+		{4E22E676-6D68-4768-B880-BEEB34F0CA4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E22E676-6D68-4768-B880-BEEB34F0CA4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E22E676-6D68-4768-B880-BEEB34F0CA4F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4E22E676-6D68-4768-B880-BEEB34F0CA4F}.Debug|x86.Build.0 = Debug|Any CPU
+		{4E22E676-6D68-4768-B880-BEEB34F0CA4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E22E676-6D68-4768-B880-BEEB34F0CA4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E22E676-6D68-4768-B880-BEEB34F0CA4F}.Release|x86.ActiveCfg = Release|Any CPU
+		{4E22E676-6D68-4768-B880-BEEB34F0CA4F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,7 @@ namespace AbilitySystem.BehaviorClasses
 {
     public abstract class DurationBehavior : LimitedTimeBehavior
     {
+        protected IUnit AppliedUnit { get; private set; }
         protected abstract void Activate(IUnit unit);
         protected abstract void Deactivate(IUnit unit);
         public override abstract bool CanApplyBehaviorTo(IUnit unit);
@@ -25,16 +26,17 @@ namespace AbilitySystem.BehaviorClasses
         public override void ApplyBehavior(IUnit unit)
         {
             if (!CanApplyBehaviorTo(unit)) return;
+            AppliedUnit = unit;
             if (IsActivated) return;
-            Thread trd = new Thread(_ => ThreadMethod(unit));
+            Thread trd = new Thread(ThreadMethod);
             trd.Start();
         }
 
-        private void ThreadMethod(IUnit unit)
+        private void ThreadMethod()
         {
             IsActivated = true;
-            Activate(unit);
-            Task.Delay(Duration).ContinueWith(_ => Deactivate(unit));
+            Activate(AppliedUnit);
+            Task.Delay(Duration).ContinueWith(_ => Deactivate(AppliedUnit));
             IsActivated = false;
         }
     }
