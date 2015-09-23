@@ -80,8 +80,45 @@ namespace ItemSystem.ItemClasses
 
     public class TestItem
     {
-        public ItemSystem.ItemClasses.Item Item { get; }
+        public ItemSystem.ItemClasses.Item Item1 { get; }
+        public ItemSystem.ItemClasses.Item Item2 { get; }
 
+        /// <summary>
+        /// Example of a behavior that can take a parameter with which it will apply the behavior
+        /// </summary>
+        private class DealDamageBehavior : ActivatableBehavior
+        {
+            private int Damage { get; set; }
+
+            protected override void BehaviorImplementation(IUnit destinationPlayer)
+            {
+                /*
+                
+                Deal the Damage variable to the Unit(when IUnit will be implemented)
+
+                */
+            }
+
+            public override bool CanApplyBehaviorTo(IUnit unit)
+            {
+                /*
+                
+                Check if `unit` is a valid unit to apply this behavior on
+
+                */
+
+                return true;
+            }
+
+            public DealDamageBehavior(int damageToDeal)
+            {
+                Damage = damageToDeal;
+            }
+        }
+
+        /// <summary>
+        /// Example of a behavior that can happen on it's own (has some debug print on Debug output and UI)
+        /// </summary>
         private class ItemBehavior : ActivatableBehavior
         {
             private bool isDrawn;
@@ -111,9 +148,12 @@ namespace ItemSystem.ItemClasses
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public TestItem()
         {
-            Item = new Item(id: 0,
+            Item1 = new Item(id: 0,
                 name: "Test Item",
                 price: 30,
                 type: ItemType.Weapon,
@@ -124,6 +164,19 @@ namespace ItemSystem.ItemClasses
                     isUnique: false,
                     description: "Just a test ability",
                     cooldown: TimeSpan.FromSeconds(3)));
+
+            Item2 = new Item(id: 1,
+                name: "Second Test Item",
+                price: 50,
+                type: ItemType.Armor,
+                baseDescription: "Just another test item",
+                ability: new Ability(effect: new BehaviorApplyingEffect(new DealDamageBehavior(5)),
+                    isActivatable: true,
+                    name: "Test ability that deals 5 damage",
+                    isUnique: false,
+                    description: "Just a test ability that deals 5 damage",
+                    cooldown: TimeSpan.FromSeconds(3)));
+
         }
     }
 }
