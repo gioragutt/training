@@ -3,10 +3,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoGameFirst.BaseGameClasses;
+using ModuloFramework.Input;
+using ModuloFramework.UISystem;
 using MonoGameFirst.BaseGameClasses.Interfaces;
-using MonoGameFirst.BaseGameClasses.Player_Classes;
-using UISystem;
 
 namespace ModuloZero.BaseGameClasses.Player_Classes
 {
@@ -20,19 +19,11 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
 
     public class Player : IKeyboardHandled, IDrawsOnUI
     {
-        #region Data Members
-
         private Vector2 currentFrame;
-
-        #endregion
-
-        #region Properties
 
         public bool ShouldDraw { get; set; }
         public int ID { get; set; }
         private bool IsSubscribedToKeyboardHandler { get; set; }
-
-        #region Animation Related Properties
 
         /// <summary>
         /// The sprite of the player
@@ -51,23 +42,11 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
 
         private bool IsAnimationActive { get; set; }
 
-        #endregion
-
-        #endregion
-
-        #region Constructor
-
         public Player()
         {
             FrameCounter = 0;
             ShouldDraw = true;
         }
-
-        #endregion
-
-        #region Basic Methods
-
-        #region Methods that are subscribed
 
         private void CommonAfterMovement()
         {
@@ -126,25 +105,13 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
             Direction = Direction.Down;
         }
 
-        #endregion
+        private void MoveUpImpl() { }
 
-        #region Implentations that go inside the methods that are subscribed
+        private void MoveDownImpl() { }
 
-        private void MoveUpImpl()
-        {
-        }
+        private void MoveLeftImpl() { }
 
-        private void MoveDownImpl()
-        {
-        }
-
-        private void MoveLeftImpl()
-        {
-        }
-
-        private void MoveRightImpl()
-        {
-        }
+        private void MoveRightImpl() { }
 
         private void ChangeAnimToUp()
         {
@@ -166,12 +133,6 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
             currentFrame.X = 1;
         }
 
-        #endregion
-
-        #endregion
-
-        #region IKeyboardHandled Methods
-
         /// <summary>
         /// Subscribes the player to the keyboard handler
         /// </summary>
@@ -179,14 +140,14 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
         {
             if (IsSubscribedToKeyboardHandler == false)
             {
-                KeyboardHandler.SubscribeToKeyPressEvent(Keys.W, UpMovement);
-                KeyboardHandler.SubscribeToKeyPressEvent(Keys.S, DownMovement);
-                KeyboardHandler.SubscribeToKeyPressEvent(Keys.A, LeftMovement);
-                KeyboardHandler.SubscribeToKeyPressEvent(Keys.D, RightMovement);
-                KeyboardHandler.SubscribeToKeyPressEvent(Keys.Down, AttackDown);
-                KeyboardHandler.SubscribeToKeyPressEvent(Keys.Up, AttackUp);
-                KeyboardHandler.SubscribeToKeyPressEvent(Keys.Right, AttackRight);
-                KeyboardHandler.SubscribeToKeyPressEvent(Keys.Left, AttackLeft);
+                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.W, UpMovement);
+                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.S, DownMovement);
+                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.A, LeftMovement);
+                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.D, RightMovement);
+                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.Down, AttackDown);
+                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.Up, AttackUp);
+                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.Right, AttackRight);
+                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.Left, AttackLeft);
             }
             IsSubscribedToKeyboardHandler = true;
         }
@@ -198,14 +159,14 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
         {
             if (IsSubscribedToKeyboardHandler)
             {
-                KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.Down, AttackDown);
-                KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.Up, AttackUp);
-                KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.Right, AttackRight);
-                KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.Left, AttackLeft);
-                KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.W, UpMovement);
-                KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.S, DownMovement);
-                KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.A, LeftMovement);
-                KeyboardHandler.UnsubscribeToKeyPressEvent(Keys.D, RightMovement);
+                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.Down, AttackDown);
+                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.Up, AttackUp);
+                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.Right, AttackRight);
+                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.Left, AttackLeft);
+                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.W, UpMovement);
+                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.S, DownMovement);
+                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.A, LeftMovement);
+                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.D, RightMovement);
             }
             IsSubscribedToKeyboardHandler = false;
         }
@@ -221,10 +182,6 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
             else
                 UnubscribeFromKeyboardHandler();
         }
-
-        #endregion
-
-        #region Animation Methods
 
         private void SetCurrentFrame(Vector2 frameToSet)
         {
@@ -250,10 +207,6 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
             SetCurrentFrame(currentFrame);
             IsAnimationActive = false;
         }
-
-        #endregion
-
-        #region XNA Methods
 
         public void Initialize()
         {
@@ -316,7 +269,5 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
             //spriteBatch.Draw(UI.PlayerHealthTexture, new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10,
             //    (int)(150f * PercentHealth), (int)hpFontSize.Y), Color.Red);
         }
-
-        #endregion
     }
 }

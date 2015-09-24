@@ -1,16 +1,13 @@
-﻿using System.CodeDom;
-using System.Globalization;
-using AbilitySystem;
-using AbilitySystem.BehaviorClasses;
-using ItemSystem.ItemClasses;
+﻿using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ModuloZero.BaseGameClasses;
+using ModuloFramework.AbilitySystem;
+using ModuloFramework.Input;
+using ModuloFramework.ItemSystem;
+using ModuloFramework.StatSystem;
+using ModuloFramework.UISystem;
 using ModuloZero.BaseGameClasses.Player_Classes;
-using MonoGameFirst.BaseGameClasses;
-using StatSystem.StatClasses;
-using UISystem;
 
 namespace ModuloZero
 {
@@ -26,31 +23,17 @@ namespace ModuloZero
 
     public class MainGame : Game
     {
-        #region Data Members
-
         public const float RES_SCALE_FACTOR_IN_WINDOW_MODE = 0.65f;
         public GraphicsDeviceManager Graphics { get; }
         private SpriteBatch spriteBatch;
         private readonly VariableStat number;
         private readonly DependentVariableStat dependentNumber;
-        private TestItem x;
-
-        #endregion
-
-        #region XNA
+        private readonly TestItem x;
 
         private KeyboardState currState;
         private KeyboardState prevState;
 
-        #endregion
-
-        #region Content
-
         public Player Player { get; set; }
-
-        #endregion
-
-        #region Constructor
 
         public MainGame()
         {
@@ -61,10 +44,6 @@ namespace ModuloZero
             dependentNumber = new DependentVariableStat(10, number);
             x = new TestItem();
         }
-
-        #endregion
-
-        #region Methods
 
         public void ToggleFullScreen()
         {
@@ -87,7 +66,7 @@ namespace ModuloZero
             InitializeWindowSize();
             Player.Initialize();
             UI.Initialize(GraphicsDevice);
-            KeyboardHandler.StartKeyboardHandler();
+            KeyboardHandler.Instance.Initialize();
             base.Initialize();
         }
 
@@ -176,7 +155,5 @@ namespace ModuloZero
 
             base.Draw(gameTime);
         }
-
-        #endregion
     }
 }

@@ -65,7 +65,6 @@
     <Compile Include="BaseGameClasses\Interfaces\IKeyboardHandled.cs" />
     <Compile Include="BaseGameClasses\Interfaces\IDrawsOnUI.cs" />
     <Compile Include="BaseGameClasses\ItemLoader.cs" />
-    <Compile Include="BaseGameClasses\KeyboardHandler.cs" />
     <Compile Include="BaseGameClasses\Player Classes\Player.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="Program.cs" />
@@ -90,25 +89,13 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AbilitySystem\AbilitySystem.csproj">
-      <Project>{bd86fa0a-87b8-4559-9eda-ee6e52a8fbe5}</Project>
-      <Name>AbilitySystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ItemSystem\ItemSystem.csproj">
-      <Project>{5e2f15d4-43ad-41f3-85ba-7955ce8ea131}</Project>
-      <Name>ItemSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StatSystem\StatSystem.csproj">
-      <Project>{4249349D-A951-4751-9940-5F4616EB456A}</Project>
-      <Name>StatSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\UISystem\UISystem.csproj">
-      <Project>{4E22E676-6D68-4768-B880-BEEB34F0CA4F}</Project>
-      <Name>UISystem</Name>
-    </ProjectReference>
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <ProjectReference Include="..\ModuloFramework\ModuloFramework.csproj">
+      <Project>{016fbc01-f863-48da-a0f5-b89827d852b8}</Project>
+      <Name>ModuloFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

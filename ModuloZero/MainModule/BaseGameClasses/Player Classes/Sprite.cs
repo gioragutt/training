@@ -1,17 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace MonoGameFirst.BaseGameClasses.Player_Classes
+namespace ModuloZero.BaseGameClasses.Player_Classes
 {
     public class Sprite
     {
-        #region Data Members
-
         private Vector2 position;
-
-        #endregion
-
-        #region Properties
 
         public Vector2 Position
         {
@@ -43,14 +37,8 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
             get { return Texture.Height; }
         }
 
-        #endregion
-
-        #region Public Constructors
-
         public Sprite(Texture2D texture, int xPos, int yPos)
-            : this(texture, new Vector2((float) xPos, (float) yPos))
-        {
-        }
+            : this(texture, new Vector2((float)xPos, (float)yPos)) { }
 
         public Sprite(Texture2D texture, Vector2 position)
         {
@@ -58,15 +46,9 @@ namespace MonoGameFirst.BaseGameClasses.Player_Classes
             this.Texture = texture;
         }
 
-        #endregion Public Constructors
-
-        #region Public Methods
-
         public void Draw(SpriteBatch spriteBatch, float scale)
         {
             spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
-
-        #endregion Public Methods
     }
 }
