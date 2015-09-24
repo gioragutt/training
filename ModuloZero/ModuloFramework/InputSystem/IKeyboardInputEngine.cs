@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Input;
 
-namespace ModuloFramework.Input
+namespace ModuloFramework.InputSystem
 {
     public delegate void KeyPressEventHandler();
 
-    public interface IKeyboardHandler
+    public interface IKeyboardInputEngine
     {
         /// <summary>
         /// Subscribe a function to a key press

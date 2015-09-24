@@ -5,13 +5,42 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ModuloFramework.UISystem
 {
-    public delegate void UIDrawEventHandler(SpriteBatch spriteBatch);
-
-    public static class UI
+    public sealed class UI : IDrawingEngine
     {
-        private static Dictionary<Color, Texture2D> ColorTextureRepository { get; set; }
+        private static volatile UI _instance;
+        private static readonly object SyncObject = new object();
 
-        public static Texture2D GetColorTexture(Color color, GraphicsDevice graphicsDevice)
+        public static UI Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    lock (SyncObject)
+                    {
+                        if (_instance == null)
+                            _instance = new UI();
+                    }
+                }
+
+                return _instance;
+            }
+        }
+
+        private SpriteFont Font { get; set; }
+
+        public GraphicsDevice GraphicsDevice { get; private set; }
+
+        public event UIDrawEventHandler DrawingEvent;
+
+        private UI()
+        {
+            ColorTextureRepository = new Dictionary<Color, Texture2D>();
+        }
+
+        private Dictionary<Color, Texture2D> ColorTextureRepository { get; set; }
+
+        public Texture2D GetColorTexture(Color color, GraphicsDevice graphicsDevice)
         {
             if (ColorTextureRepository.ContainsKey(color))
                 return ColorTextureRepository[color];
@@ -21,33 +50,37 @@ namespace ModuloFramework.UISystem
             return tex;
         }
 
-        public static SpriteFont Font { get; set; }
+        public SpriteFont DefaultFont
+        {
+            get { return Font; }
+        }
 
-        public static Texture2D PlayerHealthTexture { get; set; }
+        public Texture2D GetColorTexture(Color color)
+        {
+            return GetColorTexture(color, GraphicsDevice);
+        }
 
-        public static event UIDrawEventHandler DrawingEvent;
-
-        public static void SubscribeToUIDraw(UIDrawEventHandler handler)
+        public void SubscribeToUIDraw(UIDrawEventHandler handler)
         {
             DrawingEvent += handler;
         }
 
-        public static void UnsubscribeFromUIDraw(UIDrawEventHandler handler)
+        public void UnsubscribeFromUIDraw(UIDrawEventHandler handler)
         {
             DrawingEvent -= handler;
         }
 
-        public static void Initialize(GraphicsDevice graphicsDevice)
+        public void Initialize(GraphicsDevice graphicsDevice)
         {
-            ColorTextureRepository = new Dictionary<Color, Texture2D>();
+            GraphicsDevice = graphicsDevice;
         }
 
-        public static void LoadContent(ContentManager manager)
+        public void LoadContent(ContentManager manager)
         {
             Font = manager.Load<SpriteFont>("UI/MainFont");
         }
 
-        public static void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             if (spriteBatch != null)
                 DrawingEvent?.Invoke(spriteBatch);

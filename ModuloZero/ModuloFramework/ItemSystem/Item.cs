@@ -108,13 +108,14 @@ namespace ModuloFramework.ItemSystem
         /// <summary>
         /// Example of a behavior that can happen on it's own (has some debug print on Debug output and UI)
         /// </summary>
-        private class ItemBehavior : ActivatableBehavior
+        private class ItemBehavior : ActivatableBehavior, IDrawsOnUI
         {
             private bool isDrawn;
 
-            public ItemBehavior()
+            public ItemBehavior(IDrawingEngine drawingEngine)
             {
-                UI.SubscribeToUIDraw(PrintUi);
+                InitializeDrawingEngine(drawingEngine);
+                DrawingEngine.SubscribeToUIDraw(PrintUi);
                 isDrawn = false;
             }
 
@@ -127,13 +128,20 @@ namespace ModuloFramework.ItemSystem
             private void PrintUi(SpriteBatch spriteBatch)
             {
                 if (!isDrawn) return;
-                spriteBatch.DrawString(UI.Font, string.Format("Test"), new Vector2(20, 50),
+                spriteBatch.DrawString(DrawingEngine.DefaultFont, string.Format("Test"), new Vector2(20, 50),
                     Color.Black);
             }
 
             public override bool CanApplyBehaviorTo(IUnit unit)
             {
                 return true;
+            }
+
+            public IDrawingEngine DrawingEngine { get; set; }
+
+            public void InitializeDrawingEngine(IDrawingEngine drawingEngine)
+            {
+                DrawingEngine = drawingEngine;
             }
         }
 
@@ -148,7 +156,7 @@ namespace ModuloFramework.ItemSystem
                     description: "Just a test item",
                     ability: Ability.CreateActivatable
                         (
-                            effect: new BehaviorApplyingEffect(new ItemBehavior()),
+                            effect: new BehaviorApplyingEffect(new ItemBehavior(UI.Instance)),
                             name: "Test ability",
                             isUnique: false,
                             description: "Just a test ability",

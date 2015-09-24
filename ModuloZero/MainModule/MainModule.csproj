@@ -62,8 +62,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BaseGameClasses\Interfaces\IKeyboardHandled.cs" />
-    <Compile Include="BaseGameClasses\Interfaces\IDrawsOnUI.cs" />
     <Compile Include="BaseGameClasses\ItemLoader.cs" />
     <Compile Include="BaseGameClasses\Player Classes\Player.cs" />
     <Compile Include="MainGame.cs" />

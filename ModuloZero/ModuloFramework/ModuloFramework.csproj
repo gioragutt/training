@@ -52,8 +52,9 @@
     <Compile Include="AbilitySystem\IEffect.cs" />
     <Compile Include="AbilitySystem\ModifyUnitEffect.cs" />
     <Compile Include="AbilitySystem\IUnit.cs" />
-    <Compile Include="Input\IKeyboardHandler.cs" />
-    <Compile Include="Input\KeyboardHandler.cs" />
+    <Compile Include="InputSystem\IKeyboardInputEngine.cs" />
+    <Compile Include="InputSystem\IUsesKeyboardInput.cs" />
+    <Compile Include="InputSystem\KeyboardHandler.cs" />
     <Compile Include="ItemSystem\Enums.cs" />
     <Compile Include="ItemSystem\Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,6 +63,8 @@
     <Compile Include="StatSystem\DependentVariableStat.cs" />
     <Compile Include="StatSystem\Stat.cs" />
     <Compile Include="StatSystem\VariableStat.cs" />
+    <Compile Include="UISystem\IDrawingEngine.cs" />
+    <Compile Include="UISystem\IDrawsOnUI.cs" />
     <Compile Include="UISystem\UI.cs" />
   </ItemGroup>
   <ItemGroup />

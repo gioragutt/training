@@ -3,13 +3,14 @@ using System.Linq;
 using System.Threading;
 using Microsoft.Xna.Framework.Input;
 
-namespace ModuloFramework.Input
+namespace ModuloFramework.InputSystem
 {
     /// <summary>
     /// A static class that handles key presses
     /// </summary>
-    public class KeyboardHandler : IKeyboardHandler
+    public sealed class KeyboardHandler : IKeyboardInputEngine
     {
+        public const int SLEEP_TIME = 1000 / 60;
         private static volatile KeyboardHandler _instance;
         private static readonly object SyncObject = new object();
 
@@ -109,7 +110,7 @@ namespace ModuloFramework.Input
                     OnKeyPressed(KeypressHandlers[key]);
                 }
 
-                Thread.Sleep(16);
+                Thread.Sleep(SLEEP_TIME);
                 Prev = Curr;
             }
         }

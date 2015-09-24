@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ModuloFramework.AbilitySystem;
-using ModuloFramework.Input;
+using ModuloFramework.InputSystem;
 using ModuloFramework.ItemSystem;
 using ModuloFramework.StatSystem;
 using ModuloFramework.UISystem;
@@ -64,8 +64,8 @@ namespace ModuloZero
         protected override void Initialize()
         {
             InitializeWindowSize();
-            Player.Initialize();
-            UI.Initialize(GraphicsDevice);
+            UI.Instance.Initialize(GraphicsDevice);
+            Player.Initialize(UI.Instance);
             KeyboardHandler.Instance.Initialize();
             base.Initialize();
         }
@@ -81,7 +81,7 @@ namespace ModuloZero
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Player.LoadContent(Content, GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-            UI.LoadContent(Content);
+            UI.Instance.LoadContent(Content);
         }
 
         protected override void UnloadContent() => this.Content.Unload();
@@ -130,14 +130,14 @@ namespace ModuloZero
 
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(UI.Font, number.FinalValue.ToString(CultureInfo.InvariantCulture),
+            spriteBatch.DrawString(UI.Instance.DefaultFont, number.FinalValue.ToString(CultureInfo.InvariantCulture),
                 new Vector2(20, 20), Color.Black);
-            spriteBatch.DrawString(UI.Font, dependentNumber.FinalValue.ToString(CultureInfo.InvariantCulture),
+            spriteBatch.DrawString(UI.Instance.DefaultFont, dependentNumber.FinalValue.ToString(CultureInfo.InvariantCulture),
                 new Vector2(20, 35), Color.Black);
-            spriteBatch.DrawString(UI.Font,
+            spriteBatch.DrawString(UI.Instance.DefaultFont,
                 x.Item1.Ability.RemainingCooldown.TotalMilliseconds.ToString(CultureInfo.CurrentCulture),
                 new Vector2(20, 65), Color.Black);
-            spriteBatch.DrawString(UI.Font, x.Item1.Description, new Vector2(20, 80), Color.Black);
+            spriteBatch.DrawString(UI.Instance.DefaultFont, x.Item1.Description, new Vector2(20, 80), Color.Black);
             if (x.Item1.Ability.Cooldown != null)
             {
                 Rectangle cooldown = new Rectangle(15, 53, 350,
@@ -145,11 +145,11 @@ namespace ModuloZero
                         (70 *
                          (x.Item1.Ability.RemainingCooldown.TotalMilliseconds /
                           x.Item1.Ability.Cooldown.Value.TotalMilliseconds)));
-                spriteBatch.Draw(UI.GetColorTexture(Color.Black, GraphicsDevice), cooldown, Color.White * 0.1f);
+                spriteBatch.Draw(UI.Instance.GetColorTexture(Color.Black, GraphicsDevice), cooldown, Color.White * 0.1f);
             }
 
             Player.Draw(spriteBatch);
-            UI.Draw(spriteBatch);
+            UI.Instance.Draw(spriteBatch);
 
             spriteBatch.End();
 

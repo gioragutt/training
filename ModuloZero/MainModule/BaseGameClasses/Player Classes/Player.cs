@@ -3,9 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using ModuloFramework.Input;
+using ModuloFramework.InputSystem;
 using ModuloFramework.UISystem;
-using MonoGameFirst.BaseGameClasses.Interfaces;
 
 namespace ModuloZero.BaseGameClasses.Player_Classes
 {
@@ -17,13 +16,18 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
         Left
     }
 
-    public class Player : IKeyboardHandled, IDrawsOnUI
+    public class Player : IUsesKeyboardInput, IDrawsOnUI
     {
         private Vector2 currentFrame;
 
         public bool ShouldDraw { get; set; }
         public int ID { get; set; }
         private bool IsSubscribedToKeyboardHandler { get; set; }
+
+        /// <summary>
+        /// Graphics Engine to draw UI elements with
+        /// </summary>
+        public IDrawingEngine DrawingEngine { get; private set; }
 
         /// <summary>
         /// The sprite of the player
@@ -105,14 +109,6 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
             Direction = Direction.Down;
         }
 
-        private void MoveUpImpl() { }
-
-        private void MoveDownImpl() { }
-
-        private void MoveLeftImpl() { }
-
-        private void MoveRightImpl() { }
-
         private void ChangeAnimToUp()
         {
             currentFrame.X = 0;
@@ -140,14 +136,14 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
         {
             if (IsSubscribedToKeyboardHandler == false)
             {
-                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.W, UpMovement);
-                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.S, DownMovement);
-                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.A, LeftMovement);
-                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.D, RightMovement);
-                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.Down, AttackDown);
-                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.Up, AttackUp);
-                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.Right, AttackRight);
-                KeyboardHandler.Instance.SubscribeToKeyPressEvent(Keys.Left, AttackLeft);
+                KeyboardInputEngine.SubscribeToKeyPressEvent(Keys.W, UpMovement);
+                KeyboardInputEngine.SubscribeToKeyPressEvent(Keys.S, DownMovement);
+                KeyboardInputEngine.SubscribeToKeyPressEvent(Keys.A, LeftMovement);
+                KeyboardInputEngine.SubscribeToKeyPressEvent(Keys.D, RightMovement);
+                KeyboardInputEngine.SubscribeToKeyPressEvent(Keys.Down, AttackDown);
+                KeyboardInputEngine.SubscribeToKeyPressEvent(Keys.Up, AttackUp);
+                KeyboardInputEngine.SubscribeToKeyPressEvent(Keys.Right, AttackRight);
+                KeyboardInputEngine.SubscribeToKeyPressEvent(Keys.Left, AttackLeft);
             }
             IsSubscribedToKeyboardHandler = true;
         }
@@ -159,14 +155,14 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
         {
             if (IsSubscribedToKeyboardHandler)
             {
-                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.Down, AttackDown);
-                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.Up, AttackUp);
-                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.Right, AttackRight);
-                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.Left, AttackLeft);
-                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.W, UpMovement);
-                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.S, DownMovement);
-                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.A, LeftMovement);
-                KeyboardHandler.Instance.UnsubscribeToKeyPressEvent(Keys.D, RightMovement);
+                KeyboardInputEngine.UnsubscribeToKeyPressEvent(Keys.Down, AttackDown);
+                KeyboardInputEngine.UnsubscribeToKeyPressEvent(Keys.Up, AttackUp);
+                KeyboardInputEngine.UnsubscribeToKeyPressEvent(Keys.Right, AttackRight);
+                KeyboardInputEngine.UnsubscribeToKeyPressEvent(Keys.Left, AttackLeft);
+                KeyboardInputEngine.UnsubscribeToKeyPressEvent(Keys.W, UpMovement);
+                KeyboardInputEngine.UnsubscribeToKeyPressEvent(Keys.S, DownMovement);
+                KeyboardInputEngine.UnsubscribeToKeyPressEvent(Keys.A, LeftMovement);
+                KeyboardInputEngine.UnsubscribeToKeyPressEvent(Keys.D, RightMovement);
             }
             IsSubscribedToKeyboardHandler = false;
         }
@@ -208,9 +204,12 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
             IsAnimationActive = false;
         }
 
-        public void Initialize()
+        public void Initialize(IDrawingEngine drawingEngine, IKeyboardInputEngine keyboardInputEngine)
         {
-            UI.SubscribeToUIDraw(UIDraw);
+            InitializeDrawingEngine(drawingEngine);
+            InitializeKeyboardInputEngine(keyboardInputEngine);
+            DrawingEngine.SubscribeToUIDraw(UIDraw);
+            DrawingEngine.SubscribeToUIDraw(Sprite.Draw);
             SubscribeToKeyboardHandler();
         }
 
@@ -252,22 +251,19 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
 
         public void UIDraw(SpriteBatch spriteBatch)
         {
-            //if (!ShouldDraw)
-            //    return;
-            //int startingWidth;
-            //Vector2 hpFontSize;
-            //using (Texture2D healthBarBackgroundTexture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1))
-            //{
-            //    healthBarBackgroundTexture.SetData(new[] { Color.AntiqueWhite });
-            //    startingWidth = spriteBatch.GraphicsDevice.Viewport.Width / 2 - 100;
-            //    string hpString = string.Format("HP:{0}", Stats.Health.ToString().PadLeft(4));
-            //    hpFontSize = UI.Font.MeasureString(hpString);
-            //    spriteBatch.DrawString(UI.Font, hpString, new Vector2(startingWidth, 10f), Color.Black);
-            //    spriteBatch.Draw(healthBarBackgroundTexture,
-            //        new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10, 150, (int)hpFontSize.Y), Color.White);
-            //}
-            //spriteBatch.Draw(UI.PlayerHealthTexture, new Rectangle(startingWidth + 5 + (int)hpFontSize.X, 10,
-            //    (int)(150f * PercentHealth), (int)hpFontSize.Y), Color.Red);
+
+        }
+
+        public void InitializeDrawingEngine(IDrawingEngine drawingEngine)
+        {
+            DrawingEngine = drawingEngine;
+        }
+
+        public IKeyboardInputEngine KeyboardInputEngine { get; protected set; }
+
+        public void InitializeKeyboardInputEngine(IKeyboardInputEngine keyboardInputEngine)
+        {
+            KeyboardInputEngine = keyboardInputEngine;
         }
     }
 }

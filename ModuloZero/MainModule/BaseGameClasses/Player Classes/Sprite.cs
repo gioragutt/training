@@ -50,5 +50,10 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
         {
             spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            Draw(spriteBatch, 0.4f);
+        }
     }
 }
