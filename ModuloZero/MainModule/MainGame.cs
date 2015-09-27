@@ -1,4 +1,8 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -7,7 +11,9 @@ using ModuloFramework.InputSystem;
 using ModuloFramework.ItemSystem;
 using ModuloFramework.StatSystem;
 using ModuloFramework.UISystem;
+using ModuloZero.BaseGameClasses;
 using ModuloZero.BaseGameClasses.Player_Classes;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace ModuloZero
 {
@@ -21,6 +27,11 @@ namespace ModuloZero
         }
     }
 
+    public static class MainGameWindow
+    {
+        public static Form Window { get; set; }
+    }
+
     public class MainGame : Game
     {
         public const float RES_SCALE_FACTOR_IN_WINDOW_MODE = 0.65f;
@@ -28,7 +39,6 @@ namespace ModuloZero
         private SpriteBatch spriteBatch;
         private readonly VariableStat number;
         private readonly DependentVariableStat dependentNumber;
-        private readonly TestItem x;
 
         private KeyboardState currState;
         private KeyboardState prevState;
@@ -37,12 +47,13 @@ namespace ModuloZero
 
         public MainGame()
         {
+            MainGameWindow.Window = (Form)Control.FromHandle(Window.Handle);
+            Window.Title = "ModuloZero";
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             Player = new Player();
             number = new VariableStat.AsInt(10);
             dependentNumber = new DependentVariableStat(10, number);
-            x = new TestItem();
         }
 
         public void ToggleFullScreen()
@@ -65,7 +76,7 @@ namespace ModuloZero
         {
             InitializeWindowSize();
             UI.Instance.Initialize(GraphicsDevice);
-            Player.Initialize(UI.Instance);
+            Player.Initialize(UI.Instance, KeyboardHandler.Instance);
             KeyboardHandler.Instance.Initialize();
             base.Initialize();
         }
@@ -90,7 +101,7 @@ namespace ModuloZero
         {
             currState = Keyboard.GetState();
 
-            if (currState.IsKeyDown(Keys.Escape))
+            if (currState.IsKeyDown(Keys.F8))
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
 
             if (currState.IsKeyDown(Keys.F11))
@@ -113,12 +124,26 @@ namespace ModuloZero
                     dependentNumber.RemoveRawBonus(new RawBonus(10));
             }
 
+            if (currState.IsKeyDown(Keys.P) && !prevState.IsKeyDown(Keys.P))
+            {
+                List<Item> items = new List<Item>()
+                {
+                    TestItem.Item1,
+                    TestItem.Item2,
+                    TestItem.Item1,
+                    TestItem.Item2
+                };
+
+                Form1 form = new Form1(items, MainGameWindow.Window);
+
+                form.Show();
+                Thread trd = new Thread(() => { Application.Run(form); });
+            }
+
             Player.Update(gameTime);
 
-            if (currState.IsKeyDown(Keys.Space) && !prevState.IsKeyDown(Keys.Space))
-                Player.ToggleSubscriptionToKeyboardHandler();
             if (currState.IsKeyDown(Keys.X) && !prevState.IsKeyDown(Keys.X))
-                x.Item1.Activate(DummyUnit.Get());
+                TestItem.Item1.Activate(DummyUnit.Get());
 
             base.Update(gameTime);
             prevState = currState;
@@ -132,19 +157,20 @@ namespace ModuloZero
 
             spriteBatch.DrawString(UI.Instance.DefaultFont, number.FinalValue.ToString(CultureInfo.InvariantCulture),
                 new Vector2(20, 20), Color.Black);
-            spriteBatch.DrawString(UI.Instance.DefaultFont, dependentNumber.FinalValue.ToString(CultureInfo.InvariantCulture),
+            spriteBatch.DrawString(UI.Instance.DefaultFont,
+                dependentNumber.FinalValue.ToString(CultureInfo.InvariantCulture),
                 new Vector2(20, 35), Color.Black);
             spriteBatch.DrawString(UI.Instance.DefaultFont,
-                x.Item1.Ability.RemainingCooldown.TotalMilliseconds.ToString(CultureInfo.CurrentCulture),
+                TestItem.Item1.Ability.RemainingCooldown.TotalMilliseconds.ToString(CultureInfo.CurrentCulture),
                 new Vector2(20, 65), Color.Black);
-            spriteBatch.DrawString(UI.Instance.DefaultFont, x.Item1.Description, new Vector2(20, 80), Color.Black);
-            if (x.Item1.Ability.Cooldown != null)
+            spriteBatch.DrawString(UI.Instance.DefaultFont, TestItem.Item1.Description, new Vector2(20, 80), Color.Black);
+            if (TestItem.Item1.Ability.Cooldown != null)
             {
                 Rectangle cooldown = new Rectangle(15, 53, 350,
                     (int)
                         (70 *
-                         (x.Item1.Ability.RemainingCooldown.TotalMilliseconds /
-                          x.Item1.Ability.Cooldown.Value.TotalMilliseconds)));
+                         (TestItem.Item1.Ability.RemainingCooldown.TotalMilliseconds /
+                          TestItem.Item1.Ability.Cooldown.Value.TotalMilliseconds)));
                 spriteBatch.Draw(UI.Instance.GetColorTexture(Color.Black, GraphicsDevice), cooldown, Color.White * 0.1f);
             }
 

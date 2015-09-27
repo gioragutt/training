@@ -52,7 +52,7 @@ namespace ModuloFramework.ItemSystem
             Price = price;
             Type = type;
             Ability = ability;
-            Description = string.Format("{0}: {1}\n{2}: {3}", Name, baseDescription, Ability.Name, Ability.Description);
+            Description = string.Format("{0}\n{1}: {2}", baseDescription, Ability.Name, Ability.Description);
         }
 
         public static Item Create(int id, string name, int price, ItemType type, string description, Ability ability)
@@ -69,8 +69,8 @@ namespace ModuloFramework.ItemSystem
 
     public class TestItem
     {
-        public Item Item1 { get; }
-        public Item Item2 { get; }
+        public static Item Item1 { get; }
+        public static Item Item2 { get; }
 
         /// <summary>
         /// Example of a behavior that can take a parameter with which it will apply the behavior
@@ -145,7 +145,7 @@ namespace ModuloFramework.ItemSystem
             }
         }
 
-        public TestItem()
+        static TestItem()
         {
             Item1 = Item.Create
                 (

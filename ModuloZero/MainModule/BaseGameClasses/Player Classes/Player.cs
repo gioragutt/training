@@ -59,28 +59,24 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
 
         private void UpMovement()
         {
-            MoveUpImpl();
             ChangeAnimToUp();
             CommonAfterMovement();
         }
 
         private void DownMovement()
         {
-            MoveDownImpl();
             ChangeAnimToDown();
             CommonAfterMovement();
         }
 
         private void LeftMovement()
         {
-            MoveLeftImpl();
             ChangeAnimToLeft();
             CommonAfterMovement();
         }
 
         private void RightMovement()
         {
-            MoveRightImpl();
             ChangeAnimToRight();
             CommonAfterMovement();
         }
@@ -209,7 +205,6 @@ namespace ModuloZero.BaseGameClasses.Player_Classes
             InitializeDrawingEngine(drawingEngine);
             InitializeKeyboardInputEngine(keyboardInputEngine);
             DrawingEngine.SubscribeToUIDraw(UIDraw);
-            DrawingEngine.SubscribeToUIDraw(Sprite.Draw);
             SubscribeToKeyboardHandler();
         }
 

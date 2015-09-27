@@ -14,7 +14,9 @@ namespace ModuloZero
         private static void Main()
         {
             using (var game = new MainGame())
+            {
                 game.Run();
+            }
         }
     }
 }
