@@ -1,0 +1,30 @@
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\obj\x86\Debug\TutorialRPG.csprojResolveAssemblyReference.cache
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\obj\x86\Debug\TutorialRPG.exe
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\obj\x86\Debug\TutorialRPG.pdb
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\Content\SplashScreen\TutorialSplash.xnb
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\TutorialRPG.exe
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\TutorialRPG.pdb
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\MonoGame.Framework.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.MediaFoundation.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.XAudio2.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.Direct3D11.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.DXGI.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.Direct2D1.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.XInput.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.RawInput.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.Direct3D9.dll
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\MonoGame.Framework.xml
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.MediaFoundation.xml
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.xml
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.XAudio2.xml
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.Direct3D11.xml
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.DXGI.xml
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.Direct2D1.xml
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.XInput.xml
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.RawInput.xml
+c:\users\guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\SharpDX.Direct3D9.xml
+C:\Users\Guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\Content\Fonts\ImageFont.xnb
+C:\Users\Guttsait\documents\visual studio 2015\Projects\TutorialRPG\TutorialRPG\Content\ScreenManager\TransitionTexture.xnb
+C:\Users\Guttsait\Documents\GitHub\training\TutorialRPG\TutorialRPG\obj\x86\Debug\TutorialRPG.exe
+C:\Users\Guttsait\Documents\GitHub\training\TutorialRPG\TutorialRPG\obj\x86\Debug\TutorialRPG.pdb

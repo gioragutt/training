@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ScreenManager>
+  <Dimensions>
+    <X>640</X>
+    <Y>480</Y>
+  </Dimensions>
+  <TransitionImage>
+    <Path>ScreenManager/TransitionTexture</Path>
+    <Effects>FadeEffect</Effects>
+  </TransitionImage>
+</ScreenManager>
