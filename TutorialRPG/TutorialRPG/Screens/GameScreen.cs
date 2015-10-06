@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TutorialRPG
+namespace TutorialRPG.Screens
 {
     public abstract class GameScreen
     {
@@ -30,7 +30,7 @@ namespace TutorialRPG
 
         public virtual void UnloadContent() => Content.Unload();
 
-        public virtual void Update(GameTime gameTime) { }
+        public virtual void Update(GameTime gameTime) { InputManager.Instance.Update(); }
 
         public virtual void Draw(SpriteBatch spriteBatch) { }
     }

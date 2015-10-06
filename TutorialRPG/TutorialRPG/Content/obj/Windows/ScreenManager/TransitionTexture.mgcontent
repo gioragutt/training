@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Guttsait/documents/visual studio 2015/Projects/TutorialRPG/TutorialRPG/Content/ScreenManager/TransitionTexture.png</SourceFile>
+  <SourceFile>C:/Users/Guttsait/Documents/GitHub/training/TutorialRPG/TutorialRPG/Content/ScreenManager/TransitionTexture.png</SourceFile>
   <SourceTime>2015-10-01T18:43:24.1920113+03:00</SourceTime>
-  <DestFile>C:/Users/Guttsait/documents/visual studio 2015/Projects/TutorialRPG/TutorialRPG/Content/bin/Windows/ScreenManager/TransitionTexture.xnb</DestFile>
-  <DestTime>2015-10-01T19:00:35.9560248+03:00</DestTime>
+  <DestFile>C:/Users/Guttsait/Documents/GitHub/training/TutorialRPG/TutorialRPG/Content/bin/Windows/ScreenManager/TransitionTexture.xnb</DestFile>
+  <DestTime>2015-10-05T00:07:15.1056084+03:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T20:14:44+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

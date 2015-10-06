@@ -4,8 +4,10 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Guttsait/documents/visual studio 2015/Projects/TutorialRPG/TutorialRPG/Content/SplashScreen/TutorialSplash.png</File>
-    <File>C:/Users/Guttsait/documents/visual studio 2015/Projects/TutorialRPG/TutorialRPG/Content/Fonts/ImageFont.spritefont</File>
-    <File>C:/Users/Guttsait/documents/visual studio 2015/Projects/TutorialRPG/TutorialRPG/Content/ScreenManager/TransitionTexture.png</File>
+    <File>C:/Users/Guttsait/Documents/GitHub/training/TutorialRPG/TutorialRPG/Content/SplashScreen/TutorialSplash.png</File>
+    <File>C:/Users/Guttsait/Documents/GitHub/training/TutorialRPG/TutorialRPG/Content/Fonts/ImageFont.spritefont</File>
+    <File>C:/Users/Guttsait/Documents/GitHub/training/TutorialRPG/TutorialRPG/Content/ScreenManager/TransitionTexture.png</File>
+    <File>C:/Users/Guttsait/Documents/GitHub/training/TutorialRPG/TutorialRPG/Content/Gameplay/Player.png</File>
+    <File>C:/Users/Guttsait/Documents/GitHub/training/TutorialRPG/TutorialRPG/Content/Gameplay/TileSheets/TileSheet.png</File>
   </SourceFiles>
 </SourceFileCollection>

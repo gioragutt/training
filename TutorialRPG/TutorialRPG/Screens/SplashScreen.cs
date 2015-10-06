@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml.Serialization;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace TutorialRPG
+namespace TutorialRPG.Screens
 {
     public class SplashScreen : GameScreen
     {
@@ -18,6 +12,7 @@ namespace TutorialRPG
         {
             base.LoadContent();
             Image.LoadContent();
+            ScreenManager.Instance.CenterImage(Image);
         }
 
         public override void UnloadContent()
@@ -31,8 +26,8 @@ namespace TutorialRPG
             base.Update(gameTime);
             Image.Update(gameTime);
 
-            if(Keyboard.GetState().IsKeyDown(Keys.Enter) && !ScreenManager.Instance.IsTransitioning)
-                ScreenManager.Instance.ChangeScreen("SplashScreen");
+            if (InputManager.Instance.KeyPressed(Keys.Enter, Keys.Z))
+                ScreenManager.Instance.ChangeScreen("TitleScreen");
         }
 
         public override void Draw(SpriteBatch spriteBatch)

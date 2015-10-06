@@ -5,6 +5,7 @@ using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using TutorialRPG.Screens;
 
 namespace TutorialRPG
 {
@@ -133,6 +134,13 @@ namespace TutorialRPG
                 TransitionImage.Draw(spriteBatch);
         }
 
+        public void CenterImage(Image image)
+        {
+            image.position =
+                new Vector2((Dimensions.X - image.SourceRect.Width) / 2,
+                    (Dimensions.Y - image.SourceRect.Height) / 2);
+        }
+
         /// <summary>
         /// Changes the screen based on given screen name
         /// </summary>
@@ -140,7 +148,7 @@ namespace TutorialRPG
         public void ChangeScreen(string screenName)
         {
             if (!string.IsNullOrEmpty(screenName))
-                NextScreen = (GameScreen)Activator.CreateInstance(Type.GetType("TutorialRPG." + screenName));
+                NextScreen = (GameScreen)Activator.CreateInstance(Type.GetType("TutorialRPG.Screens." + screenName));
             TransitionImage.Scale = Dimensions;
             TransitionImage.IsActive = true;
             TransitionImage.FadeEffect.Increase = true;

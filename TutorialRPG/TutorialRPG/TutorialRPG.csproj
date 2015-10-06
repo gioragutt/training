@@ -39,10 +39,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FadeEffect.cs" />
-    <Compile Include="GameScreen.cs" />
+    <Compile Include="MapEditor\Layer.cs" />
+    <Compile Include="MapEditor\Map.cs" />
+    <Compile Include="MapEditor\Tile.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Screens\GameplayScreen.cs" />
+    <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="ImageEffect.cs" />
-    <Compile Include="SplashScreen.cs" />
+    <Compile Include="InputManager.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="MenuItem.cs" />
+    <Compile Include="MenuManager.cs" />
+    <Compile Include="Screens\SplashScreen.cs" />
+    <Compile Include="SpriteSheetEffect.cs" />
+    <Compile Include="Screens\TitleScreen.cs" />
     <Compile Include="TutorialGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,8 +69,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <Content Include="Load\Gameplay\Map\Map1.xml" />
+    <Content Include="Load\Gameplay\Player.xml" />
+    <Content Include="Load\Menu\TestMenu.xml" />
     <Content Include="Load\ScreenManager.xml" />
     <Content Include="Load\SplashScreen.xml" />
+    <Content Include="Load\Menu\TitleMenu.xml" />
+    <Content Include="Load\Test.xml" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

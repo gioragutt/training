@@ -3,17 +3,8 @@
 <SplashScreen>
   <Image>
     <Path>SplashScreen/TutorialSplash</Path>
-    <Position>
-      <X>325</X>
-      <Y>225</Y>
-    </Position>
     <Alpha>1</Alpha>
     <IsActive>true</IsActive>
-    <TextPosition>
-      <X>50</X>
-      <Y>50</Y>
-    </TextPosition>
-    <TextColor>Green</TextColor>
     <Text>Hello World</Text>
   </Image>
 </SplashScreen>
