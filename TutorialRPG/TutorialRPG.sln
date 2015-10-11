@@ -7,12 +7,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TutorialRPG", "TutorialRPG\
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA5310E9-9A62-4ED7-A17B-FB12B1C12622}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{BA5310E9-9A62-4ED7-A17B-FB12B1C12622}.Debug|x86.ActiveCfg = Debug|x86
 		{BA5310E9-9A62-4ED7-A17B-FB12B1C12622}.Debug|x86.Build.0 = Debug|x86
+		{BA5310E9-9A62-4ED7-A17B-FB12B1C12622}.Release|Any CPU.ActiveCfg = Release|x86
 		{BA5310E9-9A62-4ED7-A17B-FB12B1C12622}.Release|x86.ActiveCfg = Release|x86
 		{BA5310E9-9A62-4ED7-A17B-FB12B1C12622}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
